@@ -11,13 +11,6 @@ import {
   Nudge,
   VisuallyHidden,
 } from "./ui"
-import {
-  mobileNavOverlay,
-  mobileNavLink,
-  desktopHeaderNavWrapper,
-  mobileHeaderNavWrapper,
-  mobileNavSVGColorWrapper,
-} from "./header.css"
 import BrandLogo from "./brand-logo"
 
 const data = {
@@ -25,25 +18,25 @@ const data = {
     {
       id: 0,
       navItemType: "Link",
-      href: "#!",
+      href: "/products",
       text: "Products",
     },
     {
       id: 1,
       navItemType: "Link",
-      href: "#!",
+      href: "/pricing",
       text: "Pricing",
     },
     {
       id: 2,
       navItemType: "Link",
-      href: "#!",
+      href: "/about",
       text: "About",
     },
     {
       id: 3,
       navItemType: "Link",
-      href: "#!",
+      href: "/Blog",
       text: "Blog",
     },
   ],
@@ -67,7 +60,7 @@ export default function Header() {
 
   return (
     <header>
-      <Container className={desktopHeaderNavWrapper}>
+      <Container className={""}>
         <Space size={2} />
         <Flex variant="spaceBetween">
           <NavLink to="/">
@@ -87,14 +80,10 @@ export default function Header() {
           <div>{cta && <Button to={cta.href}>{cta.text}</Button>}</div>
         </Flex>
       </Container>
-      <Container className={mobileHeaderNavWrapper[isOpen ? "open" : "closed"]}>
+      <Container className={""}>
         <Space size={2} />
         <Flex variant="spaceBetween">
-          <span
-            className={
-              mobileNavSVGColorWrapper[isOpen ? "reversed" : "primary"]
-            }
-          >
+          <span className={""}>
             <NavLink to="/">
               <VisuallyHidden>Home</VisuallyHidden>
               <BrandLogo />
@@ -113,9 +102,7 @@ export default function Header() {
               <InteractiveIcon
                 title="Toggle menu"
                 onClick={() => setOpen(!isOpen)}
-                className={
-                  mobileNavSVGColorWrapper[isOpen ? "reversed" : "primary"]
-                }
+                className={""}
               >
                 {isOpen ? <X /> : <Menu />}
               </InteractiveIcon>
@@ -124,12 +111,12 @@ export default function Header() {
         </Flex>
       </Container>
       {isOpen && (
-        <div className={mobileNavOverlay}>
+        <div className={""}>
           <nav>
             <FlexList responsive variant="stretch">
               {navItems?.map((navItem) => (
                 <li key={navItem.id}>
-                  <NavLink to={navItem.href} className={mobileNavLink}>
+                  <NavLink to={navItem.href} className={""}>
                     {navItem.text}
                   </NavLink>
                 </li>
@@ -141,3 +128,17 @@ export default function Header() {
     </header>
   )
 }
+
+// example component level data fetching:
+// export const query = graphql`
+//   fragment AboutHeroContent on AboutHero {
+//     id
+//     heading
+//     text
+//     image {
+//       id
+//       gatsbyImageData
+//       alt
+//     }
+//   }
+// `

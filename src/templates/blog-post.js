@@ -10,8 +10,6 @@ import {
   Text,
   Avatar,
 } from "../components/ui"
-import { avatar as avatarStyle } from "../components/ui.css"
-import * as styles from "./blog-post.css"
 
 export default function BlogPost(props) {
   return (
@@ -53,7 +51,7 @@ export default function BlogPost(props) {
           )}
           <Space size={5} />
           <div
-            className={styles.blogPost}
+            className={""}
             dangerouslySetInnerHTML={{
               __html: props.html,
             }}

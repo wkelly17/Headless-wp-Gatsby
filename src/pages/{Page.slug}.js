@@ -1,24 +1,15 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import Layout from "../components/layout"
-import { Container, Box, Heading } from "../components/ui"
+import { Link } from "gatsby"
 
 export default function Page(props) {
   const { page } = props.data
 
   return (
-    <Layout {...page}>
-      <Box paddingY={5}>
-        <Container width="narrow">
-          <Heading as="h1">{page.title}</Heading>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: page.html,
-            }}
-          />
-        </Container>
-      </Box>
-    </Layout>
+    <div>
+      {page.title}
+      <div class="p-24 bg-green-400">Tailwind</div>
+    </div>
   )
 }
 

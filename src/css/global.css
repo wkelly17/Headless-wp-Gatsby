@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.gform input {
+  border: solid 1px black;
+}
+.gform label {
+  display: block;
+}
