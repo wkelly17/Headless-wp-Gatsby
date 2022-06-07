@@ -1,0 +1,30 @@
+<svg id="lines-stereo" class="lines lines--stereo" viewBox="0 0 320 535.95">
+	<g>
+		<circle class="lines__path lines__path--down" cx="160" cy="90" r="88"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="90" r="78"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="90" r="68"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="90" r="58"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="90" r="48"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="90" r="38"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="90" r="28"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="90" r="18"/>
+	</g>
+	
+	<g>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="158"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="148"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="138"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="128"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="118"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="108"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="98"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="88"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="78"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="68"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="58"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="48"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="38"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="28"/>
+		<circle class="lines__path lines__path--down" cx="160" cy="375.95" r="18"/>
+	</g>
+</svg>

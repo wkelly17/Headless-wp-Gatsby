@@ -22,6 +22,10 @@ module.exports = {
             showQueryOnError: true,
           },
         },
+        schema: {
+          timeout: 155000,
+          perPage: 50,
+        },
       },
     },
     "gatsby-plugin-postcss",
@@ -29,6 +33,7 @@ module.exports = {
     "gatsby-plugin-sharp",
     "gatsby-plugin-image",
     "gatsby-transformer-sharp",
+    "gatsby-source-filesystem",
     "gatsby-plugin-react-helmet",
     {
       resolve: "gatsby-plugin-manifest",
@@ -40,6 +45,14 @@ module.exports = {
         background_color: "#ffffff",
         theme_color: "#004ca3",
         icon: "src/favicon.png",
+      },
+    },
+    {
+      resolve: "gatsby-plugin-web-font-loader",
+      options: {
+        typekit: {
+          id: "hff1lww",
+        },
       },
     },
     {

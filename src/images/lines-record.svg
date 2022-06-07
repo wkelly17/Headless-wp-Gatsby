@@ -1,0 +1,52 @@
+<svg class="lines lines--record" viewBox="0 0 918 918" style="enable-background:new 0 0 918 918;" xml:space="preserve">
+  <circle class="lines__path" cx="459" cy="459" r="448"/>
+  <circle class="lines__path" cx="459" cy="459" r="457"/>
+  <circle class="lines__path" cx="459" cy="459" r="438"/>
+  <circle class="lines__path" cx="459" cy="459" r="428"/>
+  <circle class="lines__path" cx="459" cy="459" r="418"/>
+  <circle class="lines__path" cx="459" cy="459" r="408"/>
+  <circle class="lines__path" cx="459" cy="459" r="398"/>
+  <circle class="lines__path" cx="459" cy="459" r="388"/>
+  <circle class="lines__path" cx="459" cy="459" r="378"/>
+  <circle class="lines__path" cx="459" cy="459" r="368"/>
+  <circle class="lines__path" cx="459" cy="459" r="358"/>
+  <circle class="lines__path" cx="459" cy="459" r="348"/>
+  <circle class="lines__path lines__path--thin" cx="459" cy="459" r="338"/>
+  <circle class="lines__path lines__path--thin" cx="459" cy="459" r="328"/>
+  <circle class="lines__path" cx="459" cy="459" r="318"/>
+  <circle class="lines__path" cx="459" cy="459" r="308"/>
+  <circle class="lines__path" cx="459" cy="459" r="298"/>
+  <circle class="lines__path" cx="459" cy="459" r="288"/>
+  <circle class="lines__path" cx="459" cy="459" r="278"/>
+  <circle class="lines__path" cx="459" cy="459" r="268"/>
+  <circle class="lines__path" cx="459" cy="459" r="258"/>
+  <circle class="lines__path" cx="459" cy="459" r="248"/>
+  <circle class="lines__path" cx="459" cy="459" r="238"/>
+  <circle class="lines__path lines__path--thin" cx="459" cy="459" r="228"/>
+  <circle class="lines__path lines__path--thin" cx="459" cy="459" r="218"/>
+  <circle class="lines__path" cx="459" cy="459" r="208"/>
+  <circle class="lines__path" cx="459" cy="459" r="198"/>
+  <circle class="lines__path" cx="459" cy="459" r="188"/>
+  <circle class="lines__path" cx="459" cy="459" r="178"/>
+  <circle class="lines__path" cx="459" cy="459" r="168"/>
+  <circle class="lines__path" cx="459" cy="459" r="158"/>
+  <circle class="lines__path" cx="459" cy="459" r="148"/>
+  <circle class="lines__path" cx="459" cy="459" r="138"/>
+  <circle class="lines__path" cx="459" cy="459" r="128"/>
+  <circle class="lines__path" cx="459" cy="459" r="118"/>
+  <circle class="lines__path" cx="459" cy="459" r="108"/>
+  <circle class="lines__path" cx="459" cy="459" r="98"/>
+  <circle class="lines__path" cx="459" cy="459" r="88"/>
+  <circle class="lines__path" cx="459" cy="459" r="78"/>
+  <circle class="lines__path" cx="459" cy="459" r="68"/>
+  <circle class="lines__path" cx="459" cy="459" r="58"/>
+  <circle class="lines__path" cx="459" cy="459" r="48"/>
+  <circle class="lines__path" cx="459" cy="459" r="38"/>
+  <circle class="lines__path" cx="459" cy="459" r="28"/>
+  <circle class="lines__path" cx="459" cy="459" r="18"/>
+
+	<path class="lines__path" d="M797,459c0,186.7-151.3,338-338,338S121,645.7,121,459"/>
+	<path class="lines__path" d="M787,459c0,181.2-146.8,328-328,328S131,640.2,131,459"/>
+	<path class="lines__path" d="M459,687c-125.9,0-228-102.1-228-228s102.1-228,228-228"/>
+	<path class="lines__path" d="M459,677c-120.4,0-218-97.6-218-218s97.6-218,218-218"/>
+</svg>
