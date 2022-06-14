@@ -33,8 +33,15 @@ module.exports = {
     "gatsby-plugin-sharp",
     "gatsby-plugin-image",
     "gatsby-transformer-sharp",
-    "gatsby-source-filesystem",
     "gatsby-plugin-react-helmet",
+    {
+      resolve: `gatsby-plugin-sass`,
+      options: {
+        sassOptions: {
+          includePaths: ["/src/css"],
+        },
+      },
+    },
     {
       resolve: "gatsby-plugin-manifest",
       options: {

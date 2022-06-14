@@ -1,0 +1,135 @@
+.btn-pill:after {
+  background: url(../images/icons.svg) no-repeat 75%/500% 100%;
+}
+.btn-pill:hover {
+  animation: flickerColor 1s forwards;
+}
+.btn-link:after {
+  background: url(../images/icons.svg) no-repeat 100%/500% 100%;
+}
+@keyframes flickerColor {
+  0%,
+  9.999%,
+  12%,
+  32.999%,
+  34%,
+  34.999%,
+  40%,
+  100% {
+    color: rgba(#fff, 0.99);
+    text-shadow: 0 0 3px #fff;
+  }
+  10%,
+  11.999%,
+  33%,
+  33.999%,
+  35%,
+  39.999% {
+    color: rgba(#fff, 0.4);
+    text-shadow: none;
+  }
+}
+
+@keyframes flickerDropShadow {
+  0%,
+  9.999%,
+  12%,
+  32.999%,
+  34%,
+  34.999%,
+  40%,
+  100% {
+    filter: drop-shadow(0 0 4px rgba(#fff, 0.99));
+  }
+  10%,
+  11.999%,
+  33%,
+  33.999%,
+  35%,
+  39.999% {
+    filter: drop-shadow(0 0 2px rgba(#fff, 0.4));
+  }
+}
+
+// illos:
+.lines__path {
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+.illo path {
+  @apply text-grayDarker;
+}
+
+.lines {
+  display: block;
+  margin: auto;
+
+  &__path {
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 4;
+    stroke-miterlimit: 10;
+
+    &--thin {
+      stroke-width: 1;
+    }
+
+    &--down {
+      transform: translate(0, 1rem);
+    }
+  }
+
+  &--record {
+    width: 1120px;
+    height: 1120px;
+  }
+
+  &--doors {
+    width: 1120px;
+    height: 560px;
+  }
+
+  &--stereo {
+    width: 40vw;
+    height: 40vw * 1.6835443;
+  }
+
+  @screen d {
+    &__path {
+      &--thin {
+        stroke-width: 2;
+      }
+    }
+
+    &--record {
+      width: 100vh;
+      height: 100vh;
+    }
+
+    &--doors {
+      width: 80vw;
+      height: 40vw;
+
+      path {
+        cursor: pointer;
+        transition: stroke-width 0.3s ease;
+
+        &:hover {
+          stroke-width: 6;
+        }
+      }
+    }
+
+    &--stereo {
+      width: 20vw;
+      height: 20vw * 1.6835443;
+    }
+
+    &--martini {
+      width: 50vw;
+      height: 50vw * 0.75;
+    }
+  }
+}

@@ -1,0 +1,78 @@
+/* TYPOGRAPHY*/
+
+html {
+  font-size: 14px;
+  line-height: 1.5;
+
+  @screen tl {
+    font-size: 16px;
+  }
+  @screen d {
+    font-size: 18px;
+  }
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  @apply text-grayDarker;
+}
+
+h1,
+.h1 {
+  @apply uppercase font-compressed;
+  font-size: 14.2857143rem;
+  line-height: 0.9;
+}
+h1 small,
+.h1 small {
+  font-size: 0.667em;
+}
+
+h2,
+.h2 {
+  @apply font-bold uppercase font-extended;
+  font-size: 2.57142857rem;
+  line-height: 1.2;
+}
+
+h3,
+.h3 {
+  @apply font-regular font-normal;
+  font-size: 2.14285714rem;
+  line-height: 1.25;
+}
+
+h4,
+.h4 {
+  @apply font-bold uppercase font-extended;
+  font-size: 1rem;
+  line-height: 1.33333;
+}
+h4 small,
+.h4 small {
+  font-size: 1em;
+}
+
+h5,
+.h5 {
+  @apply font-bold uppercase font-condensed;
+  font-size: 1.71428571rem;
+  line-height: 1.16667;
+}
+
+h6,
+.h6 {
+  @apply uppercase font-condensed;
+  font-size: 1.28571429rem;
+  line-height: 1.33333;
+}

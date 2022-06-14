@@ -1,5 +1,7 @@
+import React from "react"
 import { forwardRef } from "react"
-function Box({ children, as = "div", ...props }, ref) {
+
+const Box = forwardRef(({ children, as = "div", ...props }, ref) => {
   const Component = as
 
   return (
@@ -7,11 +9,36 @@ function Box({ children, as = "div", ...props }, ref) {
       {children}
     </Component>
   )
-}
+})
 
-export default forwardRef(Box)
+Box.Section = forwardRef(({ children, ...props }, ref) => {
+  return (
+    <section ref={ref} {...props}>
+      {children}
+    </section>
+  )
+})
+Box.Main = forwardRef(({ children, ...props }, ref) => {
+  return (
+    <main ref={ref} {...props}>
+      {children}
+    </main>
+  )
+})
 
-// take a component
-// Take animation parameters
-// useIso LayoutEffect based on Parameters
-//Return Component
+Box.Aside = forwardRef(({ children, ...props }, ref) => {
+  return (
+    <aside ref={ref} {...props}>
+      {children}
+    </aside>
+  )
+})
+
+Box.Nav = forwardRef(({ children, ...props }, ref) => {
+  return (
+    <nav ref={ref} {...props}>
+      {children}
+    </nav>
+  )
+})
+export default Box
