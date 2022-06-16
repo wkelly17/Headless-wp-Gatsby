@@ -7,6 +7,7 @@ import "./src/css/style.scss"
 import { ResponsiveProvider } from "./src/context/ResponsiveContext"
 import { gsap } from "gsap"
 import { Box } from "./src/components/atoms"
+import { Masthead } from "./src/components/organisms"
 
 const queryClient = new QueryClient()
 gsap.config({
@@ -21,9 +22,7 @@ export const wrapRootElement = ({ element }) => (
 export const wrapPageElement = ({ element, props }) => {
   return (
     <Box className="">
-      <Box className="masthead">
-        <Link to="/">home</Link>
-      </Box>
+      <Masthead />
       {element}
     </Box>
   )

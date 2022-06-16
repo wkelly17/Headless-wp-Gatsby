@@ -57,15 +57,6 @@ export default function SelectField({
         isMulti={isMultiSelect}
         isSearchable={true}
         // placeholder={"placeholder!"}
-        // formatOptionLabel={({ label, value }) => {
-        //   // debugger
-        //   return (
-        //     <span className="bg-green-100">
-        //       {label} has {value}
-        //     </span>
-        //   )
-        // }}
-
         // components={{ Option, MenuList }}
       />
       {errors[id] && <span>This field is required</span>}
@@ -155,13 +146,3 @@ const MenuList = ({ children, ...props }) => {
     </components.MenuList>
   )
 }
-
-// export default function SelectField(props) {
-//   let id = 1
-//   debugger
-//   return (
-//     <>
-//       <label htmlFor={id}>{"label"}</label>
-//     </>
-//   )
-// }

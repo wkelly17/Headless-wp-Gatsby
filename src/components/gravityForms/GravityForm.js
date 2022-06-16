@@ -35,7 +35,6 @@ export default function GravityForm({
 
   // https://github.com/harness-software/wp-graphql-gravity-forms/blob/develop/docs/submitting-forms.md
   async function onSubmit(data) {
-    debugger
     console.log({ data })
 
     let result = Object.entries(data)
@@ -64,7 +63,7 @@ export default function GravityForm({
       className={`gform ${formClassName}`}
       id={`gform-${formId}`}
     >
-      <div className="formInnerWrapper h-80">
+      <div className="formInnerWrapper">
         {/* register your input into the hook by invoking the "register" function */}
 
         {fields.length &&
