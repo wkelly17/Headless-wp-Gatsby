@@ -22,6 +22,10 @@ export function Home2EventsExit({ node, e, exit, entry }, needDur = false) {
   let sectionPrev = section.previousElementSibling
   let sectionNext = section.nextElementSibling
 
+  let header = document.querySelector(".masthead")
+  let headerWidth = header.offsetWidth
+  let headerHeight = header.offsetHeight
+
   let tl = gsap.timeline({
     paused: true,
   })
@@ -37,7 +41,7 @@ export function Home2EventsExit({ node, e, exit, entry }, needDur = false) {
       {
         duration: 0.8,
         ease: "expo.out",
-        width: window.innerWidth - 100,
+        width: window.innerWidth - headerWidth,
       },
       "<"
     )
@@ -81,14 +85,13 @@ export function EventsFromHomeEntry({ node, e, exit, entry }, needDur = false) {
   let tl = gsap.timeline({
     paused: true,
   })
-
-  tl.from(node, {
-    opacity: 0,
-    duration: 0.5,
-  })
-  if (entry && entry.play) {
-    tl.play()
-  }
+  // tl.from(node, {
+  //   opacity: 0,
+  //   duration: 0.5,
+  // })
+  // if (entry && entry.play) {
+  //   tl.play()
+  // }
   if (needDur) {
     return tl.duration()
   }
@@ -99,7 +102,6 @@ export function Home2VenueExit({ node, e, exit, entry }, needDur = false) {
   let tl = gsap.timeline({
     paused: true,
   })
-  console.count("home2venue")
 
   let hubScroller = qf(node, "#hub-scroller")
   let section = hubScroller.querySelector("#hub-section-2")
@@ -109,8 +111,9 @@ export function Home2VenueExit({ node, e, exit, entry }, needDur = false) {
   let sectionPane = section.querySelector("#hub-section2-pane")
   let sectionLines = section.querySelector("#hub-section-2lines")
 
-  let headerWidth = 100
-  let headerHeight = 100
+  let header = document.querySelector(".masthead")
+  let headerWidth = header.offsetWidth
+  let headerHeight = header.offsetHeight
 
   let sectionX = (section.offsetLeft - headerWidth) * -1
   let sectionY = (section.offsetTop - window.pageYOffset) * -1
@@ -146,7 +149,7 @@ export function Home2VenueExit({ node, e, exit, entry }, needDur = false) {
       {
         duration: 0.8,
         ease: "expo.out",
-        width: window.innerWidth - headerWidth,
+        width: viewPortWidth() - headerWidth,
       },
       "<"
     )
@@ -163,4 +166,11 @@ export function Home2VenueExit({ node, e, exit, entry }, needDur = false) {
   if (needDur) {
     return tl.duration()
   }
+}
+
+function viewPortWidth() {
+  return (
+    window.innerWidth -
+    (window.innerWidth - document.documentElement.clientWidth)
+  )
 }

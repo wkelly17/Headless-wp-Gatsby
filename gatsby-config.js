@@ -109,7 +109,7 @@ module.exports = {
               }
               ... on WpMediaItem {
                 id
-                alt
+                altText
                 title
               }
               ... on WpPost {

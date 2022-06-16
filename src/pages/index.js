@@ -192,7 +192,7 @@ export default function Homepage(props) {
               className="absolute block bg-grayDarker right-0 top-0 w-full d:w-[4px] d:h-full"
             ></span>
             <Heading
-              wrapInHeading={true}
+              wrapInHeader={true}
               headerClasses="hub__section__header w-full absolute left-0 top-1/2 -translate-y-1/2 "
               as="h2"
               className={"h4 !text-white text-center"}

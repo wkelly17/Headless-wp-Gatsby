@@ -3,7 +3,7 @@ export function SVGLinesDoors() {
   return (
     <svg
       id="lines-doors"
-      className="h-[560px] w-[1120px] d:h-[40vw] d:w-[80vw]"
+      className="h-[560px] w-[1120px] d:h-[40vw] d:w-[80vw] m-auto"
       width="1284"
       height="644.02"
       viewBox="0 0 1284 644.02"

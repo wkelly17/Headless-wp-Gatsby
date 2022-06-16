@@ -31,6 +31,8 @@ export function assignFields(type) {
       return AddressField
     case "SELECT":
       return SelectField
+    case "MULTISELECT":
+      return SelectField
     case "NUMBER":
       return NumberField
     case "RADIO":
@@ -47,4 +49,144 @@ export function assignFields(type) {
       return undefined
       break
   }
+}
+
+export function shapeFieldsToGfSchema(field) {
+  console.log(field)
+  switch (field.type) {
+    case "ADDRESS":
+      return {
+        id: field.id,
+        addressValues: field.inputs
+          ? field.inputs
+              .filter((inp) => !inp.isHidden)
+              .map((input) => {
+                return input.key
+              })
+          : null,
+        type: field.type,
+      }
+    case "CHECKBOX":
+      return {
+        id: field.id,
+        checkboxValues: field.inputs.map((input) => {
+          return input.id
+        }),
+        type: field.type,
+      }
+    case "EMAIL":
+      return {
+        id: field.id,
+        emailValues: field.inputs
+          ? field.inputs.map((input) => {
+              return input.id
+            })
+          : null,
+        type: field.type,
+      }
+    case "NAME":
+      return {
+        id: field.id,
+        nameValues: field.inputs
+          ? field.inputs
+              .filter((inp) => !inp.isHidden)
+              .map((input) => {
+                return input.key
+              })
+          : null,
+        type: field.type,
+      }
+    case "MULTISELECT":
+      return {
+        id: field.id,
+        values: [],
+        type: field.type,
+      }
+
+    default:
+      return {
+        id: field.id,
+        type: field.type,
+      }
+  }
+}
+
+export function reshapeDataForSubmit(input, idx, fieldTypeMap) {
+  let [id, vals] = input
+  if (Array.isArray(vals)) {
+    vals = vals.filter((val) => val != undefined)
+  }
+  let correspondingType = fieldTypeMap.find((obj) => obj.id == id)
+  let reshaped = {}
+
+  switch (correspondingType.type) {
+    case "ADDRESS":
+      let addObj = {}
+      vals.forEach((val, idx) => {
+        let key = correspondingType.addressValues[idx]
+        addObj[key] = val[key]
+      })
+      reshaped = {
+        id: Number(id),
+        addressValues: addObj,
+      }
+      break
+
+    case "CHECKBOX":
+      reshaped = {
+        id: Number(id),
+        checkboxValues: vals.map((val, idx) => {
+          let value = val ? "true" : "false"
+          return {
+            inputId: correspondingType.checkboxValues[idx],
+            value: value,
+          }
+        }),
+      }
+      break
+    case "EMAIL":
+      reshaped = {
+        id: Number(id),
+        emailValues: {
+          value: vals,
+        },
+      }
+
+      break
+    case "NAME":
+      let namesObj = {}
+      vals.forEach((val, idx) => {
+        let key = correspondingType.nameValues[idx]
+        namesObj[key] = val[key]
+      })
+      reshaped = {
+        id: Number(id),
+        nameValues: namesObj,
+      }
+      break
+
+    case "SELECT":
+      reshaped = {
+        id: Number(id),
+        value: vals.value,
+      }
+      break
+
+    case "MULTISELECT":
+      reshaped = {
+        id: Number(id),
+        values: vals.map((value) => {
+          return value.value
+        }),
+      }
+      break
+
+    default:
+      reshaped = {
+        id: Number(id),
+        value: vals,
+      }
+      break
+  }
+  return reshaped
 }

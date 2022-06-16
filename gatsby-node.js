@@ -25,7 +25,7 @@ exports.createPages = ({ graphql, actions }) => {
     if (result.errors) {
       throw result.errors
     }
-    let cptsSlugs = ["news", "venue", "event-calendar"]
+    let cptsSlugs = ["home", "news", "venue", "event-calendar"]
     // Create blog post pages.
     result.data.allWpPage.edges.forEach((edge) => {
       if (!cptsSlugs.includes(edge.node.slug)) {

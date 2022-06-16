@@ -1,0 +1,43 @@
+@mixin min($class) {
+  @if $class == tablet-portrait {
+    @media (min-width: 600px) {
+      @content;
+    }
+  } @else if $class == tablet-landscape {
+    @media (min-width: 900px) {
+      @content;
+    }
+  } @else if $class == desktop {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  } @else if $class == desktop-large {
+    @media (min-width: 1600px) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint mixin supports: tablet-portrait, tablet-landscape, desktop, desktop-large";
+  }
+}
+
+@mixin max($class) {
+  @if $class == tablet-portrait {
+    @media (max-width: 599px) {
+      @content;
+    }
+  } @else if $class == tablet-landscape {
+    @media (max-width: 899px) {
+      @content;
+    }
+  } @else if $class == desktop {
+    @media (max-width: 1199px) {
+      @content;
+    }
+  } @else if $class == desktop-large {
+    @media (max-width: 1599px) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint mixin supports: tabletPortrait, tablet-landscape, desktop, desktop-large";
+  }
+}

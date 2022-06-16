@@ -1,0 +1,77 @@
+.hub-newsletter-form {
+  position: relative;
+  width: 100%;
+
+  input,
+  label {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .formInputWrapper {
+    label {
+      @apply font-extended;
+      height: 100%;
+      width: 37.5%;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      text-transform: uppercase;
+    }
+    input[type="email"] {
+      background: none;
+      border: none;
+      box-shadow: inset -2px 0 0 #414042;
+      font-family: obviously, sans-serif;
+      font-size: 16px;
+      height: 100%;
+      margin: 0;
+      padding: 1.5rem 1rem;
+      width: 100%;
+    }
+  }
+
+  .formFooter {
+    input[type="submit"] {
+      background: url(../images/icons.svg) no-repeat 0 0/500% 100%,
+        linear-gradient(180deg, #ead930, transparent),
+        url(../images/pattern-halftone.png), #ead930;
+      border: none;
+      cursor: pointer;
+      font-size: 0;
+      position: relative;
+      width: 100%;
+    }
+  }
+
+  @include min(desktop) {
+    display: flex;
+    .formInnerWrapper {
+      width: 88%;
+    }
+    .formFooter {
+      width: 12%;
+
+      input[type="submit"] {
+        padding-top: 100%;
+      }
+    }
+    .formInputWrapper {
+      height: 100%;
+      display: flex;
+      width: 100%;
+      align-items: center;
+
+      label {
+        box-shadow: inset -4px 0 0 #414042;
+      }
+      input[type="email"] {
+        height: 100%;
+        width: 62.5%;
+        padding: 3rem;
+        box-shadow: inset -4px 0 0 #414042;
+      }
+    }
+  }
+}

@@ -1,70 +1,26 @@
-import React from "react"
-import { useForm } from "react-hook-form"
+import React, { useState } from "react"
+import { useForm, Controller } from "react-hook-form"
 import TextField from "./formFields/TextField"
 import { graphql } from "gatsby"
-import { assignFields } from "../../utilities/gravity-forms"
+import {
+  assignFields,
+  shapeFieldsToGfSchema,
+  reshapeDataForSubmit,
+} from "../../utilities/gravity-forms"
 import { useSubmitGravityForm } from "../../api/queries"
 
-export default function GravityForm(props) {
+export default function GravityForm({
+  form,
+  formClassName = "",
+  confirmationFunction,
+}) {
   // console.log(props)
-  let fields = props.data?.formFields.nodes
-  let formId = props.data?.databaseId
+  let fields = form.formFields.nodes
+  let formId = form.databaseId
   const mutation = useSubmitGravityForm({ id: formId, fieldValues: [] })
-  // debugger
 
-  // todo: link a map to data via ID's;
   let fieldTypeMap = fields.map((field) => {
-    console.log(field)
-    switch (field.type) {
-      case "ADDRESS":
-        return {
-          id: field.id,
-          addressValues: field.inputs
-            ? field.inputs
-                .filter((inp) => !inp.isHidden)
-                .map((input) => {
-                  return input.key
-                })
-            : null,
-          type: field.type,
-        }
-      case "CHECKBOX":
-        return {
-          id: field.id,
-          checkboxValues: field.inputs.map((input) => {
-            return input.id
-          }),
-          type: field.type,
-        }
-      case "EMAIL":
-        return {
-          id: field.id,
-          emailValues: field.inputs
-            ? field.inputs.map((input) => {
-                return input.id
-              })
-            : null,
-          type: field.type,
-        }
-      case "NAME":
-        return {
-          id: field.id,
-          nameValues: field.inputs
-            ? field.inputs
-                .filter((inp) => !inp.isHidden)
-                .map((input) => {
-                  return input.key
-                })
-            : null,
-          type: field.type,
-        }
-
-      default:
-        return {
-          id: field.id,
-          type: field.type,
-        }
-    }
+    return shapeFieldsToGfSchema(field)
   })
   // console.log({ formId })
 
@@ -73,74 +29,18 @@ export default function GravityForm(props) {
     handleSubmit,
     watch,
     formState: { errors },
+    reset,
+    control,
   } = useForm()
 
   // https://github.com/harness-software/wp-graphql-gravity-forms/blob/develop/docs/submitting-forms.md
   async function onSubmit(data) {
+    debugger
     console.log({ data })
 
     let result = Object.entries(data)
     let formVals = result.map((input, idx) => {
-      let [id, vals] = input
-      if (Array.isArray(vals)) {
-        vals = vals.filter((val) => val != undefined)
-      }
-      let correspondingType = fieldTypeMap.find((obj) => obj.id == id)
-      let reshaped = {}
-      switch (correspondingType.type) {
-        case "ADDRESS":
-          let addObj = {}
-          vals.forEach((val, idx) => {
-            let key = correspondingType.addressValues[idx]
-            addObj[key] = val[key]
-          })
-          reshaped = {
-            id: Number(id),
-            addressValues: addObj,
-          }
-          break
-
-        case "CHECKBOX":
-          reshaped = {
-            id: Number(id),
-            checkboxValues: vals.map((val, idx) => {
-              let value = val ? "true" : "false"
-              return {
-                inputId: correspondingType.checkboxValues[idx],
-                value: value,
-              }
-            }),
-          }
-          break
-        case "EMAIL":
-          reshaped = {
-            id: Number(id),
-            emailValues: {
-              value: vals,
-            },
-          }
-
-          break
-        case "NAME":
-          let namesObj = {}
-          vals.forEach((val, idx) => {
-            let key = correspondingType.nameValues[idx]
-            namesObj[key] = val[key]
-          })
-          reshaped = {
-            id: Number(id),
-            nameValues: namesObj,
-          }
-          break
-
-        default:
-          reshaped = {
-            id: Number(id),
-            value: vals,
-          }
-          break
-      }
-      return reshaped
+      return reshapeDataForSubmit(input, idx, fieldTypeMap)
     })
     debugger
     let response = await mutation.mutateAsync({
@@ -149,36 +49,68 @@ export default function GravityForm(props) {
     })
     debugger
     console.log(response)
-
-    // submitGfForm(
-    // 	input: {id: "2", fieldValues: {id: 1, value: "Testing Graphiql Submission"}}
-    // )
-
-    // id: 5
-    // checkboxValues: [
-    // 	{ inputId: 5.1, value: "This checkbox field is selected" }
-    // 	{ inputId: 5.2, value: "This checkbox field is also selected" }
-    // ]
-    // debugger
-    // console.log(errors['1'])
+    if (!response.submitGfForm.errors) {
+      if (confirmationFunction) {
+        confirmationFunction(reset)
+      }
+    } else {
+      // todo: a default confirmation message fade in above the submit btn;
+    }
   }
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-    <form onSubmit={handleSubmit(onSubmit)} className="gform">
-      {/* register your input into the hook by invoking the "register" function */}
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={`gform ${formClassName}`}
+      id={`gform-${formId}`}
+    >
+      <div className="formInnerWrapper h-80">
+        {/* register your input into the hook by invoking the "register" function */}
 
-      {fields.length &&
-        fields.map((field) => {
-          let Component = assignFields(field.type)
-          if (Component) {
-            return (
-              <div className="py-4 border" key={field.id}>
-                <Component register={register} field={field} errors={errors} />
-              </div>
-            )
-          }
-        })}
-      <input type="submit" />
+        {fields.length &&
+          fields.map((formField) => {
+            let Component = assignFields(formField.type)
+
+            if (Component && Component.name == "SelectField") {
+              let isMultiSelect = formField.type === "MULTISELECT"
+
+              return (
+                <>
+                  <p>React select in progress</p>
+                  <Controller
+                    name={String(formField.id)}
+                    control={control}
+                    rules={{ required: formField.isRequired }}
+                    render={({ field }) => {
+                      // debugger
+                      return (
+                        <Component
+                          {...field}
+                          formField={formField}
+                          errors={errors}
+                          isMultiSelect={isMultiSelect}
+                        />
+                      )
+                    }}
+                  />
+                </>
+              )
+            } else if (Component) {
+              return (
+                <div className="formInputWrapper" key={formField.id}>
+                  <Component
+                    register={register}
+                    field={formField}
+                    errors={errors}
+                  />
+                </div>
+              )
+            }
+          })}
+      </div>
+      <div class="formFooter">
+        <input type="submit" />
+      </div>
     </form>
   )
 }
@@ -276,6 +208,18 @@ export const query = graphql`
           label
           value
           placeholder
+          choices {
+            isSelected
+            text
+            value
+          }
+        }
+        ... on WpMultiSelectField {
+          id
+          description
+          isRequired
+          label
+          value
           choices {
             isSelected
             text

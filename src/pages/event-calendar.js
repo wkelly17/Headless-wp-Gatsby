@@ -3,14 +3,17 @@ import { graphql } from "gatsby"
 import { useStaticQuery, Link } from "gatsby"
 import TransitionLink from "gatsby-plugin-transition-link"
 import { gsap } from "gsap"
+import GravityForm from "../components/gravityForms/GravityForm"
 
-export default function VenuePage(props) {
+export default function EventsPage(props) {
   // const { wpPage } = props.data
+  console.log(props.data)
+  let { wpGfForm } = props.data
 
   return (
-    <div>
+    <div className="w-3/5 mx-auto">
       {/* {page.slug} */}
-      <div className="p-24 bg-green-400">DEFINITELY THE event cal PAGE</div>
+      <GravityForm form={wpGfForm} formClassName="testForm" />
     </div>
   )
 }
@@ -21,6 +24,19 @@ export const query = graphql`
       slug
       id
       title
+    }
+    wpGfForm(databaseId: { eq: 6 }) {
+      databaseId
+      confirmations {
+        message
+        isDefault
+        isActive
+        id
+        name
+        type
+        url
+      }
+      ...gravityFormFragment
     }
   }
 `

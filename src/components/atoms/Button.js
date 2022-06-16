@@ -9,9 +9,14 @@ const buttonClassNames = {
   link: "btn-link text-grayDarker after:content-[''] after:h-[1em] after:mt-0 after:mr-0 after:mb-[-3px] after:ml-2 after:w-[1em]",
 }
 
-function Button({ children, ...restProps }) {
+function Button({ children, className, type, ...restProps }) {
   return (
-    <button {...restProps} className={buttonClassNames.base}>
+    <button
+      {...restProps}
+      className={`${buttonClassNames.base} ${className && className} ${
+        type && cn(type, buttonClassNames)
+      }`}
+    >
       {children}
     </button>
   )
@@ -25,9 +30,7 @@ Button.Link = function ButtonLink({
 }) {
   return (
     <Link
-      className={`${className} ${buttonClassNames.base} ${
-        type && getTypes(type)
-      } `}
+      className={getButtonClassName(className, type)}
       to={to}
       {...restProps}
     >
@@ -46,25 +49,32 @@ Button.TransitionLink = function btl({
   return (
     <TransitionLink
       to={to}
-      className={`${className && className} ${buttonClassNames.base} ${
-        type && getTypes(type)
-      } `}
+      className={getButtonClassName(className, type)}
       {...restProps}
     >
       {children}
     </TransitionLink>
   )
 }
-function getTypes(type) {
-  if (Array.isArray(type)) {
-    let total = ""
-    type.forEach((t) => {
-      total += " " + buttonClassNames[t]
-    })
-    return total
-  } else {
-    return buttonClassNames[type]
-  }
+
+Button.LinkExternal = function ButtonLinkExternal({
+  children,
+  to,
+  type,
+  className,
+  ...restProps
+}) {
+  return (
+    <a className={getButtonClassName(className, type)} href={to} {...restProps}>
+      {children}
+    </a>
+  )
+}
+
+function getButtonClassName(className, type = undefined) {
+  return `${className || ""} ${buttonClassNames.base} ${
+    type && cn(type, buttonClassNames)
+  }`
 }
 
 export default Button

@@ -4,13 +4,13 @@ export default function Heading({
   children,
   as = "h1",
   className,
-  wrapInHeading,
+  wrapInHeader,
   headerClasses,
   ...restProps
 }) {
   const Component = as
 
-  if (wrapInHeading) {
+  if (wrapInHeader) {
     return (
       <header className={headerClasses}>
         <Component className={className} {...restProps}>

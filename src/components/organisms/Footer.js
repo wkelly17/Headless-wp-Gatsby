@@ -1,15 +1,31 @@
 import React from "react"
 import { Box, Heading, Button } from "../atoms"
 import { useStaticQuery, graphql, Link } from "gatsby"
+import GravityForm from "../gravityForms/GravityForm"
+import { NewsletterSuccessFxn } from "../../animations/interactions"
 
 export default function Footer(props) {
   const data = useStaticQuery(queryString)
+  const { wpGfForm } = data
+
+  let confirmationMessage =
+    wpGfForm.confirmations[0]?.message ||
+    "Success. Thank you for your submission"
+  let confirmationFunction = React.useCallback((hookFormReset) => {
+    NewsletterSuccessFxn(hookFormReset, confirmationMessage, wpGfForm)
+  }, [])
 
   const { myOptionsPage: optionsPage } = data.allWp.nodes[0]
   const { footerFields, marquee, virtualTourLink } = optionsPage
   return (
     <Box id="colophone-inner" className="bg-white d:flex d:flex-col d:h-full">
-      <Box className="flex colophon_form">Put colophone form here;</Box>
+      <Box className="flex colophon_form">
+        <GravityForm
+          form={wpGfForm}
+          formClassName="hub-newsletter-form"
+          confirmationFunction={confirmationFunction}
+        />
+      </Box>
       <Box id="colophon__content" className=" shadow-borderTopBg d:h-full">
         <Box
           id="colophon__content__top"
@@ -79,7 +95,9 @@ export default function Footer(props) {
             href="https://www.honeybook.com/widget/duling_hall_220197/cf_id/626b113aa262f91551c3eca3"
             className="!text-white marquee h1"
           >
-            <small className="pb-12 marquee__item">{marquee.text}</small>
+            <small className="absolute left-0 inline-block w-full pb-12 -translate-y-1/2 marquee__item top-1/2">
+              {marquee.text}
+            </small>
           </a>
         </Box>
       </Box>
@@ -142,6 +160,19 @@ const queryString = graphql`
           }
         }
       }
+    }
+    wpGfForm(databaseId: { eq: 1 }) {
+      databaseId
+      confirmations {
+        message
+        isDefault
+        isActive
+        id
+        name
+        type
+        url
+      }
+      ...gravityFormFragment
     }
   }
 `

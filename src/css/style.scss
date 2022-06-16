@@ -1,2 +1,13 @@
+@import "responsive";
 @import "base";
 @import "componentAdditions.scss";
+@import "forms";
+
+.masthead {
+  position: fixed;
+  z-index: 10;
+  width: 10%;
+  opacity: 0.5;
+  height: 100%;
+  outline: solid red 3px;
+}
