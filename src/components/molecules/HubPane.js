@@ -1,6 +1,6 @@
 import React from "react"
 import { Box } from "../atoms"
-import cn from "../../utilities/className"
+import { cnMap } from "../../utilities/className"
 
 export default function HubPane({
   children,
@@ -25,7 +25,7 @@ export default function HubPane({
       {...restProps}
       ref={ref}
       as={as}
-      className={`relative no-underline ${cn(
+      className={`relative no-underline ${cnMap(
         classKeys,
         addlClasses
       )} ${className}`}

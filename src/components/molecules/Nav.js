@@ -13,7 +13,9 @@ Nav.Recursive = function RecursiveList({
   as = "nav",
   className,
   counter = 1,
-  listItemClassNames,
+  topLevelListItemClassNames = "",
+  listItemClassNames = "",
+  subNavClasses = "",
   ...restProps
 }) {
   const Component = as
@@ -27,28 +29,35 @@ Nav.Recursive = function RecursiveList({
           items={item.children}
           counter={counter}
           depth={depth}
+          className={subNavClasses}
           // className={""}
           listItemClassNames={""}
         />
       )
     }
   }
-  let navPrefix =
-    counter === 1 ? "nav" : `nav__subnav nav__subnav-depth-${counter}`
+  let navPrefix = counter === 1 ? "nav" : `nav__subnav`
+
+  function liClassName(item) {
+    let base = `${navPrefix}__item ${navPrefix}__list__item`
+    let withProps = `${listItemClassNames}`
+    let hasChildren = `${
+      !!item.children.length ? "nav__item__hasChildren" : ""
+    }`
+
+    return [base, withProps, hasChildren, topLevelListItemClassNames]
+      .filter((bool) => bool)
+      .join(" ")
+  }
 
   return (
-    <Component className={`${className ?? ""} ${navPrefix}`} {...restProps}>
-      <List className={`${navPrefix}__nav__list`}>
+    <Component className={`${navPrefix} ${className ?? ""}`} {...restProps}>
+      <List className={`${navPrefix}__list`}>
         {items.map((item, idx) => {
           return (
-            <ListItem
-              key={item.id}
-              className={`${navPrefix}__item ${navPrefix}__list__item ${
-                listItemClassNames ?? ""
-              } ${!!item.children.length ? "nav__item__hasChildren" : ""}`}
-            >
+            <ListItem key={item.id} className={liClassName(item)}>
               <Link to={item.uri} className={`${navPrefix}__list__item__link `}>
-                {item.label}
+                <span>{item.label}</span>
               </Link>
               {counter < depth && recurseIn(item)}
             </ListItem>

@@ -7,8 +7,31 @@ let colors = {
   grayLight: "#eee",
   grayLighter: "#f7f7f7",
 }
+let colEnds = {
+  1: "span 1",
+  2: "span 2",
+  3: "span 3",
+  4: "span 4",
+  5: "span 5",
+  6: "span 6",
+  7: "span 7",
+  8: "span 8",
+  9: "span 9",
+  10: "span 10",
+  11: "span 11",
+  12: "span 12",
+  13: "span 13",
+  14: "span 14",
+  15: "span 15",
+  16: "span 16",
+  17: "span 17",
+  18: "span 18",
+  19: "span 19",
+  20: "span 20",
+}
+
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./gatsby-browser.js"],
   theme: {
     screens: {
       tp: "600px",
@@ -48,15 +71,7 @@ module.exports = {
         18: "18",
         19: "19",
       },
-      gridColumnEnd: {
-        13: "13",
-        14: "14",
-        15: "15",
-        16: "16",
-        17: "17",
-        18: "18",
-        19: "19",
-      },
+      gridColumnEnd: colEnds,
       colors,
       boxShadow: {
         pillShadow: "-0.25rem 0 0.5rem rgb(0 0 0 / 35%)",

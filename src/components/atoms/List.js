@@ -1,10 +1,25 @@
 import React from "react"
 import { ListItem } from "./index"
+import { baseCn } from "../../utilities/className"
 
-export default function List({ children, as = "ul", className, ...restProps }) {
+//   list-style: none;
+// margin: 0; padding-left: 0;
+
+let baseClasses = "m-0 pl-0 list-none"
+export default function List({
+  children,
+  as = "ul",
+  className,
+  overRideBaseStyles = false,
+  ...restProps
+}) {
   const Component = as
+
   return (
-    <Component className={className} {...restProps}>
+    <Component
+      className={baseCn({ overRideBaseStyles, className, baseClasses })}
+      {...restProps}
+    >
       {children}
     </Component>
   )
@@ -17,10 +32,11 @@ List.Recursive = function RecursiveList({
   as = "ul",
   className,
   counter = 1,
+  overRideBaseStyles,
   ...restProps
 }) {
   const Component = as
-  debugger
+
   //start on firs pass; no recursion
 
   function recurseIn(item) {
@@ -33,7 +49,10 @@ List.Recursive = function RecursiveList({
   }
 
   return (
-    <Component className={className} {...restProps}>
+    <Component
+      className={baseCn({ overRideBaseStyles, className, baseClasses })}
+      {...restProps}
+    >
       {items.map((item, idx) => {
         return (
           <ListItem key={item.id}>

@@ -1,4 +1,4 @@
-export default function cn(type = undefined, map) {
+export function cnMap(type = undefined, map) {
   if (!type) {
     return
   }
@@ -11,4 +11,9 @@ export default function cn(type = undefined, map) {
   } else {
     return map[type]
   }
+}
+export function baseCn({ overRideBaseStyles, className, baseClasses }) {
+  if (!overRideBaseStyles) {
+    return `${baseClasses} ${className ?? ""}`
+  } else return `${className ?? ""}`
 }

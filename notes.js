@@ -105,7 +105,7 @@ let final = res2.map((index) => {
 to="/event-calendar"
 trigger={async (pages) => {
   // wait until we have access to both pages
-  debugger
+  
   const exit = await pages.exit
   const entry = await pages.entry
   // here we can access both pages
@@ -118,7 +118,7 @@ trigger={async (pages) => {
 
   console.log(entry)
   let x = 3
-  debugger
+  
   // the entering page is visible here.
   // if you want you can animate it now!
 }}

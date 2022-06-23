@@ -1,0 +1,89 @@
+.nav {
+  &__list,
+  &__subnav__list {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+  }
+
+  &__list__item__link {
+    @extend h2;
+    span {
+      font-size: 0.8em;
+    }
+    color: $secondary;
+  }
+
+  &__list__item__link,
+  &__subnav__list__item__link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    vertical-align: middle;
+  }
+  &__subnav__list__item__link {
+    color: white;
+  }
+  &__subnav__list__item {
+    display: inline-block;
+    &:not(:last-child) {
+      margin-right: 1.5rem;
+    }
+  }
+
+  @include min(desktop) {
+    &__list {
+      &__item {
+        &__link {
+          &:hover {
+            text-shadow: 0 0 6px $secondary;
+            animation: flicker 1s forwards;
+          }
+
+          @keyframes flicker {
+            0%,
+            9.999%,
+            12%,
+            32.999%,
+            34%,
+            34.999%,
+            40%,
+            100% {
+              opacity: 0.99;
+            }
+            10%,
+            11.999%,
+            33%,
+            33.999%,
+            35%,
+            39.999% {
+              opacity: 0.4;
+            }
+          }
+        }
+      }
+    }
+
+    &__subnav {
+      &__list {
+        &__item {
+          display: inline-block;
+          &:not(:last-child) {
+            margin-right: 1.5rem;
+          }
+          &__link {
+            transition: color 0.3s ease;
+
+            &:hover {
+              color: $secondary;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include min(desktop-large) {
+    //content
+  }
+}

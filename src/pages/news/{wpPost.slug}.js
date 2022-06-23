@@ -2,9 +2,14 @@ import React from "react"
 import { graphql } from "gatsby"
 
 function BlogSingle(props) {
-  console.log({ props })
+  const { wpPost } = props.data
 
-  return <pre>Blog single</pre>
+  return (
+    <div className="w-3/5 mx-auto">
+      You've reach a post single;
+      {wpPost.title}
+    </div>
+  )
 }
 
 export const query = graphql`

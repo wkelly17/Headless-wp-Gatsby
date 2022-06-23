@@ -1,4 +1,6 @@
-import React from "react"
+import React, { useEffect } from "react"
+import { illoSputnikAnimate, linesRecord } from "../../animations/interactions"
+import { ResponsiveContext } from "../../context/ResponsiveContext"
 export function SVGLinesDoors() {
   return (
     <svg
@@ -213,26 +215,48 @@ export function SVGLinesDoors() {
   )
 }
 
-export function IlloSputnik() {
+export function IlloSputnik({ homepageAnimate, sideScroller, className = "" }) {
+  let { isDesktop } = React.useContext(ResponsiveContext)
+  let ref = React.useRef()
+
+  React.useEffect(() => {
+    if (isDesktop && homepageAnimate) {
+      illoSputnikAnimate(ref, isDesktop, sideScroller)
+    } else {
+      console.log("moble")
+    }
+  }, [isDesktop, sideScroller, homepageAnimate])
+
   return (
     <svg
       id="illo-sputnik"
-      className="w-[50vw] tp:w-[40vw] tl:w-[30vw] d:w-[20vw] illo illo--sputnik"
+      className={`w-[50vw] tp:w-[40vw] tl:w-[30vw] d:w-[20vw] illo illo--sputnik ${className}`}
       viewBox="0 0 319.97 344.88"
+      ref={ref}
     >
       <path d="M238.21,344.81a23.92,23.92,0,0,1-14-41.51l-58.06-82.88a54.86,54.86,0,0,1-51.7,7.05L55.24,329.93a3.15,3.15,0,0,1-5.45-3.15l58.83-101.89a54.86,54.86,0,0,1-12.16-8.57l-91.75,53a3.15,3.15,0,0,1-3.15-5.45h0L92,211.63a54.78,54.78,0,0,1,6.36-77.21,52.58,52.58,0,0,1,4.93-3.72L43.37,45.19a23.94,23.94,0,1,1,5.17-3.6l60.16,85.9a54.87,54.87,0,0,1,54.65,2.6l33.1-57.33c-10-6.54-17.77-15.4-14.8-20.54,1.5-2.6,5.4-3.49,11-2.52a52.13,52.13,0,0,1,14.22,5.06l.1-.18c-10-6.53-17.77-15.4-14.8-20.54,1.5-2.6,5.4-3.49,11-2.51a52.11,52.11,0,0,1,14.22,5l13.59-23.53a3.14,3.14,0,1,1,5.45,3.14L222.81,39.68c10.48,6.59,18.94,15.9,15.86,21.22-1.15,2-3.62,2.88-6.82,2.88-5.31,0-12.66-2.4-19.49-6l0,.08c10.47,6.59,18.93,15.9,15.86,21.22-1.16,2-3.62,2.88-6.83,2.88-5.31,0-12.66-2.4-19.48-6l-33.41,57.87a54.79,54.79,0,0,1,16.88,23.91l130-75a3.15,3.15,0,0,1,3.15,5.45L187.17,164A54.86,54.86,0,0,1,171,216.4l58.35,83.31a23.93,23.93,0,1,1,11,45.19C239.62,344.9,238.92,344.87,238.21,344.81Zm-3.47-40.57-.06,0c-.27.09-.54.18-.8.29l-.11,0c-.25.1-.5.2-.74.32l0,0h0a17.63,17.63,0,0,0-6.69,5.32h0q-.22.28-.42.57l-.07.1-.36.53-.08.14-.33.53-.07.14a16.59,16.59,0,0,0-1.21,2.6l0,.06-.21.63,0,.12c-.07.21-.13.43-.19.64l0,.11c-.05.23-.11.45-.16.67a.14.14,0,0,1,0,.07,19.45,19.45,0,0,0-.35,2.27,17.63,17.63,0,1,0,19.11-16c-.52-.05-1-.07-1.55-.07a17.44,17.44,0,0,0-5.55.9Zm-133.51-128a39.88,39.88,0,1,0,40.09-39.67h-.21A39.77,39.77,0,0,0,101.23,176.21ZM217.57,79.53c4.58.8,7.79.25,8.8-1.5s-.12-4.8-3.1-8.36a51.56,51.56,0,0,0-12-10l-8.35,14.46A51.38,51.38,0,0,0,217.57,79.53ZM183.46,53.27c-1,1.75.13,4.8,3.11,8.36a50.13,50.13,0,0,0,10.92,9.31l8.3-14.36a49.74,49.74,0,0,0-13.53-4.8,22.48,22.48,0,0,0-3.75-.37c-2.56,0-4.34.63-5,1.85Zm44.6,8.08c4.58.8,7.79.25,8.8-1.5s-.12-4.8-3.1-8.36a51.56,51.56,0,0,0-12-10L213.42,56a51.49,51.49,0,0,0,14.64,5.39ZM194,35.09c-1,1.75.12,4.8,3.1,8.37A50.4,50.4,0,0,0,208,52.77l8.31-14.37a50.08,50.08,0,0,0-13.53-4.8,22.6,22.6,0,0,0-3.76-.37c-2.56,0-4.33.64-5,1.86Z" />
     </svg>
   )
 }
-export function LinesRecords() {
+export function LinesRecords({ sideScroller, homePageAnim, className }) {
   let style = {
     enableBackground: "new 0 0 918 918",
   }
+  let { isDesktop } = React.useContext(ResponsiveContext)
+  //
+  useEffect(() => {
+    console.log({ sideScroller })
+    if (homePageAnim) {
+      let ref = document.querySelector("#hubLinesRecords .lines--record")
+      linesRecord(ref, isDesktop, sideScroller)
+    }
+  }, [sideScroller, isDesktop])
   return (
     <svg
-      className="lines lines--record"
+      className={`lines lines--record ${className}`}
       viewBox="0 0 918 918"
       style={style}
+      // ref={ref}
       // xml:space="preserve"
     >
       <circle className="lines__path" cx="459" cy="459" r="448" />
@@ -317,6 +341,613 @@ export function LinesRecords() {
         className="lines__path"
         d="M459,677c-120.4,0-218-97.6-218-218s97.6-218,218-218"
       />
+    </svg>
+  )
+}
+
+export function IlloToothPickSvg({ className = "", ...restProps }) {
+  let style = {
+    enableBackground: "new 0 0 177.1 401.1",
+  }
+  return (
+    <svg
+      {...restProps}
+      version="1.1"
+      id="illo-toothpick"
+      className={`illo illo--toothpick ${className}`}
+      xmlns="http://www.w3.org/2000/svg"
+      x="0px"
+      y="0px"
+      viewBox="0 0 177.1 401.1"
+      style={style}
+    >
+      <path
+        className="st0"
+        d="M75.2,278.9c-1.5-0.3-3-0.5-4.5-0.8s-3-0.6-4.5-0.9c-7.4,38.1-14.4,74.3-21,106.4c-1.1,5.9-2.3,11.9-3.4,18
+	l8.8,1.7c1.2-6.1,2.4-12.1,3.7-17.9C60.3,353.1,67.5,317,75.2,278.9z"
+      />
+      <path
+        className="st0"
+        d="M91.3,173.9c44,8.7,81.6,0,85.5-19.8c3.8-19.2-25.4-40.7-67.1-50c10.2-54.2,9.6-57.9,15.6-102
+	c-11.4,43.3-13.3,46.4-24.4,100.3c-42.1-7.3-77.2,1.5-81,20.7C15.9,142.8,47.3,165.2,91.3,173.9z M170,152.7
+	c-2.6,13.3-32.2,22.2-72.7,15.3c3.8-19.1,7.5-38.3,11.1-57.2C148.7,119.8,172.7,139.3,170,152.7L170,152.7z M99.5,109
+	c-3.9,18.8-7.7,37.9-11.6,57.1c-40.1-9-64-28.5-61.4-41.8S58.8,102,99.5,109z"
+      />
+      <path
+        className="st0"
+        d="M71.8,272.4c44,8.7,81.6,0,85.5-19.8c3.8-19.1-25.3-40.6-66.8-49.9c1.5-7.4,2.9-14.9,4.4-22.3
+	c-1.6-0.3-3.2-0.6-4.7-0.9c-1.6-0.3-3.2-0.6-4.7-1c-1.5,7.5-2.9,14.9-4.4,22.3c-41.9-7.2-76.9,1.6-80.7,20.7
+	C-3.6,241.4,27.8,263.7,71.8,272.4z M89.2,209.4c40.1,9,64,28.5,61.4,41.8c-2.6,13.3-32.3,22.3-72.9,15.3
+	C81.5,247.8,85.3,228.7,89.2,209.4L89.2,209.4z M79.8,207.5c-3.8,19.3-7.5,38.4-11.1,57.2c-40.2-9-64.2-28.5-61.6-41.9
+	C9.7,209.5,39.2,200.6,79.8,207.5L79.8,207.5z"
+      />
+    </svg>
+  )
+}
+export function LinesSteroSvg({ className = "" }) {
+  return (
+    <svg
+      id="lines-stereo"
+      className={`lines lines--stereo ${className}`}
+      viewBox="0 0 320 535.95"
+    >
+      <g>
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="90"
+          r="88"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="90"
+          r="78"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="90"
+          r="68"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="90"
+          r="58"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="90"
+          r="48"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="90"
+          r="38"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="90"
+          r="28"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="90"
+          r="18"
+        />
+      </g>
+
+      <g>
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="158"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="148"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="138"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="128"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="118"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="108"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="98"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="88"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="78"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="68"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="58"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="48"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="38"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="28"
+        />
+        <circle
+          className="lines__path lines__path--down"
+          cx="160"
+          cy="375.95"
+          r="18"
+        />
+      </g>
+    </svg>
+  )
+}
+export function SVGMartini() {
+  return (
+    <svg
+      id="lines-martini"
+      className="lines lines--martini"
+      viewBox="0 0 802.83 601.41"
+    >
+      <g id="lines-martini-1">
+        <line
+          className="lines__path"
+          x1="402.57"
+          y1="14.08"
+          x2="386.35"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.76"
+          y1="14.08"
+          x2="415.98"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-2">
+        <line
+          className="lines__path"
+          x1="402.57"
+          y1="30.22"
+          x2="370.21"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.76"
+          y1="30.22"
+          x2="432.12"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-3">
+        <line
+          className="lines__path"
+          x1="402.57"
+          y1="46.36"
+          x2="354.08"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.76"
+          y1="46.36"
+          x2="448.25"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-4">
+        <line
+          className="lines__path"
+          x1="402.58"
+          y1="62.5"
+          x2="337.94"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.75"
+          y1="62.5"
+          x2="464.39"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-5">
+        <line
+          className="lines__path"
+          x1="402.58"
+          y1="78.64"
+          x2="321.81"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.75"
+          y1="78.64"
+          x2="480.52"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-6">
+        <line
+          className="lines__path"
+          x1="402.59"
+          y1="94.78"
+          x2="305.67"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.74"
+          y1="94.78"
+          x2="496.66"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-7">
+        <line
+          className="lines__path"
+          x1="402.59"
+          y1="110.92"
+          x2="289.54"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.74"
+          y1="110.92"
+          x2="512.79"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-8">
+        <line
+          className="lines__path"
+          x1="402.6"
+          y1="127.06"
+          x2="273.4"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.73"
+          y1="127.06"
+          x2="528.93"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-9">
+        <line
+          className="lines__path"
+          x1="402.6"
+          y1="143.2"
+          x2="257.27"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.73"
+          y1="143.2"
+          x2="545.06"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-10">
+        <line
+          className="lines__path"
+          x1="402.61"
+          y1="159.33"
+          x2="241.13"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.72"
+          y1="159.33"
+          x2="561.2"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-11">
+        <line
+          className="lines__path"
+          x1="402.61"
+          y1="175.47"
+          x2="225"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.72"
+          y1="175.47"
+          x2="577.33"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-12">
+        <line
+          className="lines__path"
+          x1="402.61"
+          y1="192.58"
+          x2="207.89"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.72"
+          y1="192.58"
+          x2="594.44"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-13">
+        <line
+          className="lines__path"
+          x1="402.6"
+          y1="209.68"
+          x2="190.78"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.73"
+          y1="209.68"
+          x2="611.55"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-14">
+        <line
+          className="lines__path"
+          x1="402.6"
+          y1="226.79"
+          x2="173.67"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.73"
+          y1="226.79"
+          x2="628.66"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-15">
+        <line
+          className="lines__path"
+          x1="402.6"
+          y1="243.89"
+          x2="156.56"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.73"
+          y1="243.89"
+          x2="645.77"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-16">
+        <line
+          className="lines__path"
+          x1="402.59"
+          y1="261"
+          x2="139.46"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.74"
+          y1="261"
+          x2="662.87"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-17">
+        <line
+          className="lines__path"
+          x1="402.59"
+          y1="278.1"
+          x2="122.35"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.74"
+          y1="278.1"
+          x2="679.98"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-18">
+        <line
+          className="lines__path"
+          x1="402.59"
+          y1="295.21"
+          x2="105.24"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.74"
+          y1="295.21"
+          x2="697.09"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-19">
+        <line
+          className="lines__path"
+          x1="402.58"
+          y1="312.32"
+          x2="88.13"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.75"
+          y1="312.32"
+          x2="714.2"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-20">
+        <line
+          className="lines__path"
+          x1="402.58"
+          y1="329.42"
+          x2="71.02"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.75"
+          y1="329.42"
+          x2="731.31"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-21">
+        <line
+          className="lines__path"
+          x1="402.58"
+          y1="346.53"
+          x2="53.91"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.75"
+          y1="346.53"
+          x2="748.42"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-22">
+        <line
+          className="lines__path"
+          x1="402.57"
+          y1="363.63"
+          x2="36.81"
+          y2="-2.14"
+        />
+        <line
+          className="lines__path"
+          x1="399.76"
+          y1="363.63"
+          x2="765.52"
+          y2="-2.14"
+        />
+      </g>
+
+      <g id="lines-martini-23">
+        <polyline
+          className="lines__path"
+          points="395.61 601.41 395.61 375.12 18.56 -3.59"
+        />
+        <polyline
+          className="lines__path"
+          points="407.64 601.41 407.64 375.12 784.68 -3.59"
+        />
+      </g>
+
+      <g id="lines-martini-24">
+        <polyline
+          className="lines__path"
+          points="383.21 601.38 383.21 380.15 1.29 -3.46"
+        />
+        <polyline
+          className="lines__path"
+          points="419.62 601.38 419.62 380.15 801.55 -3.46"
+        />
+      </g>
+    </svg>
+  )
+}
+
+export function IconCloseSvg({ className = "" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24">
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
     </svg>
   )
 }

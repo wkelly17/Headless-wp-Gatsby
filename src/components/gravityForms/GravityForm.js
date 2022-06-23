@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { useForm, Controller } from "react-hook-form"
 import TextField from "./formFields/TextField"
 import { graphql } from "gatsby"
@@ -8,16 +8,27 @@ import {
   reshapeDataForSubmit,
 } from "../../utilities/gravity-forms"
 import { useSubmitGravityForm } from "../../api/queries"
+import { formBounce } from "../../animations/interactions"
 
 export default function GravityForm({
   form,
   formClassName = "",
   confirmationFunction,
+  footerClassName = "",
 }) {
   // console.log(props)
   let fields = form.formFields.nodes
   let formId = form.databaseId
   const mutation = useSubmitGravityForm({ id: formId, fieldValues: [] })
+  let [bounceTl, setBounceTl] = useState()
+
+  React.useEffect(() => {
+    let tl = formBounce(
+      document.querySelector('.hub-newsletter-form input[type="submit"')
+    )
+
+    setBounceTl(tl)
+  }, [])
 
   let fieldTypeMap = fields.map((field) => {
     return shapeFieldsToGfSchema(field)
@@ -41,12 +52,12 @@ export default function GravityForm({
     let formVals = result.map((input, idx) => {
       return reshapeDataForSubmit(input, idx, fieldTypeMap)
     })
-    debugger
+
     let response = await mutation.mutateAsync({
       id: formId,
       fieldValues: formVals,
     })
-    debugger
+
     console.log(response)
     if (!response.submitGfForm.errors) {
       if (confirmationFunction) {
@@ -63,7 +74,7 @@ export default function GravityForm({
       className={`gform ${formClassName}`}
       id={`gform-${formId}`}
     >
-      <div className="formInnerWrapper">
+      <div className="formInnerWrapper dmax:h-24">
         {/* register your input into the hook by invoking the "register" function */}
 
         {fields.length &&
@@ -75,13 +86,12 @@ export default function GravityForm({
 
               return (
                 <>
-                  <p>React select in progress</p>
                   <Controller
                     name={String(formField.id)}
                     control={control}
                     rules={{ required: formField.isRequired }}
                     render={({ field }) => {
-                      // debugger
+                      //
                       return (
                         <Component
                           {...field}
@@ -101,14 +111,15 @@ export default function GravityForm({
                     register={register}
                     field={formField}
                     errors={errors}
+                    addlState={{ bounceTl }}
                   />
                 </div>
               )
             }
           })}
       </div>
-      <div class="formFooter">
-        <input type="submit" />
+      <div className={`formFooter ${footerClassName}`}>
+        <input type="submit" className="dmax:h-full" />
       </div>
     </form>
   )

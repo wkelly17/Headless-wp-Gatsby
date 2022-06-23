@@ -2,7 +2,5 @@
 - A search page
 - Create/Refine the search component with more detailed gatsby graphql query
 - Setup hotkey search as an example of progressive enhancement
-- Integrate a CPT into duling as an example; Or ACM, but likely CPT for familiarity
 - Provide an example of rendering a page with "content" (Maybe parsed content);
 - Setup a default react Swiper component? (Although swiper is really just a wrapper around your other components; not really a dedicated need for one; )
-- Headless UI Slide Out Menu;

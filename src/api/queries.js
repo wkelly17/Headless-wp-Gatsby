@@ -73,13 +73,13 @@ export function useLogin() {
     },
     onError: (error, variables, context) => {
       // An error happened!
-      debugger
+
       console.log(error)
       console.log(`rolling back optimistic update with id ${context.id}`)
     },
     onSuccess: (data, variables, context) => {
       // Boom baby!
-      debugger
+
       console.log(data)
     },
     onSettled: (data, error, variables, context) => {
@@ -159,10 +159,7 @@ export function useGravityForm(id) {
 }
 
 export function useSubmitGravityForm(variables) {
-  console.log("running submitGravity")
-
   let queryFn = async (variables) => {
-    debugger
     console.log("trying gravity submit")
     let mutation = gql`
       mutation MyMutation(
@@ -196,13 +193,13 @@ export function useSubmitGravityForm(variables) {
     },
     onError: (error, variables, context) => {
       // An error happened!
-      debugger
+
       console.log(error)
       console.log(`rolling back optimistic update with id ${context.id}`)
     },
     onSuccess: (data, variables, context) => {
       // Boom baby!
-      debugger
+
       console.log(data)
     },
     onSettled: (data, error, variables, context) => {
@@ -210,4 +207,23 @@ export function useSubmitGravityForm(variables) {
       console.log({ data })
     },
   })
+}
+
+export function useGetTicketMaster() {
+  let url =
+    "https://app.ticketmaster.com/discovery/v2/events?apikey=hgYKY0yYFPxZyFWHWcCl5Wz2dPSoOqgc&venueId=KovZpa3Ize&locale=*"
+  let queryFn = async () => {
+    try {
+      let response = await fetch(url)
+      if (!response.ok) {
+        throw new Error("tck response not ok")
+      }
+      const data = await response.json()
+      return data
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  return useQuery("get-ticketMaster", queryFn)
 }

@@ -12,6 +12,9 @@ exports.createPages = ({ graphql, actions }) => {
       allWpPage {
         edges {
           node {
+            template {
+              templateName
+            }
             content
             id
             slug
@@ -26,6 +29,7 @@ exports.createPages = ({ graphql, actions }) => {
       throw result.errors
     }
     let cptsSlugs = ["home", "news", "venue", "event-calendar"]
+    // todo: create a separate interior template for proof of concept;
     // Create blog post pages.
     result.data.allWpPage.edges.forEach((edge) => {
       if (!cptsSlugs.includes(edge.node.slug)) {

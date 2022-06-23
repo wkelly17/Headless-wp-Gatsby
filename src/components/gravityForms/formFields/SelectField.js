@@ -3,7 +3,7 @@ import Select, { components } from "react-select"
 
 // export default function SelectField({ register, field, errors }) {
 //   let id = String(field.id)
-//   debugger
+//
 //   return (
 //     <>
 //       <label htmlFor={id}>{field.label}</label>
@@ -121,7 +121,7 @@ const Control = ({ children, ...props }) => {
   )
 }
 const Option = ({ children, ...props }) => {
-  // debugger
+  //
   const { isDisabled, isFocused, isSelected } = props
 
   return (
@@ -137,7 +137,7 @@ const Option = ({ children, ...props }) => {
   )
 }
 const MenuList = ({ children, ...props }) => {
-  // debugger
+  //
   const { isDisabled, isFocused, isSelected } = props
 
   return (

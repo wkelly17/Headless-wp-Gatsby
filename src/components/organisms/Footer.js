@@ -3,8 +3,9 @@ import { Box, Heading, Button } from "../atoms"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import GravityForm from "../gravityForms/GravityForm"
 import { NewsletterSuccessFxn } from "../../animations/interactions"
+import { MarqueeAnimate } from "../../animations/interactions"
 
-export default function Footer(props) {
+export default function Footer({ sideScroller }) {
   const data = useStaticQuery(queryString)
   const { wpGfForm } = data
 
@@ -15,14 +16,21 @@ export default function Footer(props) {
     NewsletterSuccessFxn(hookFormReset, confirmationMessage, wpGfForm)
   }, [])
 
+  React.useEffect(() => {
+    MarqueeAnimate(sideScroller)
+  }, [sideScroller])
+
   const { myOptionsPage: optionsPage } = data.allWp.nodes[0]
   const { footerFields, marquee, virtualTourLink } = optionsPage
   return (
-    <Box id="colophone-inner" className="bg-white d:flex d:flex-col d:h-full">
+    <Box id="colophon-inner" className="bg-white d:flex d:flex-col d:h-full">
       <Box className="flex colophon_form">
         <GravityForm
           form={wpGfForm}
           formClassName="hub-newsletter-form"
+          footerClassName={
+            "dmax:bottom-0 dmax:h-24 dmax:absolute dmax:right-0 dmax:w-24"
+          }
           confirmationFunction={confirmationFunction}
         />
       </Box>
@@ -82,10 +90,10 @@ export default function Footer(props) {
         </Box>
         <Box
           id="colophon__content__bottom"
-          className="text-center text-white bg-grayDarker d:h-1/2 tp:h-[40vw] h-[80vw] block relative "
+          className="text-center text-white bg-grayDarker d:h-1/2 tp:h-[40vw] h-[80vw] block relative overflow-hidden"
         >
           <small
-            id="colophone__content__bottom__copyright"
+            id="colophon__content__bottom__copyright"
             className="absolute left-0 w-full bottom-8"
           >
             2022 Duling Hall
