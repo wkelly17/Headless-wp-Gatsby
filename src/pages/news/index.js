@@ -5,12 +5,8 @@ import {
   Heading,
   Header,
   Button,
-  SVGLinesDoors,
-  IlloSputnik,
   List,
   ListItem,
-  LinesRecords,
-  If,
 } from "../../components/atoms"
 import { Footer } from "../../components/organisms"
 
@@ -47,7 +43,7 @@ function BlogIndex(props) {
   }, [limitedPosts])
 
   function navPosts(dir) {
-    let sliceVar = dir == "prev" ? -1 : 1
+    let sliceVar = dir === "prev" ? -1 : 1
     let startIdx = (limitedPosts.currentPage + sliceVar) * amount //e.g. page (2 +-1) * 6) ==
     let endIdx = startIdx + amount
     let newSlice = posts.slice(startIdx, endIdx)
@@ -76,14 +72,14 @@ function BlogIndex(props) {
     <>
       <Box.Main
         id="news"
-        className=" grid grid-cols-20 tl:grid-cols-18 d:ml-[10%] bg-white min-height-[101vh] border-b-2 d:border-b-4 border-grayDarker"
+        className=" grid grid-cols-20 tl:grid-cols-18  bg-white min-height-[101vh] border-b-2 d:border-b-4 border-grayDarker"
       >
         <Box
           id="news-inner"
           className="col-start-3 pt-12 pb-8 col-end-16 tl:col-end-14 tl:pt-row tl:pb-row"
         >
           <Header className="pb-8 tp:pb-12">
-            <Heading className="h3">News</Heading>
+            <Heading className="h3"> News </Heading>
             {/* <If data={false} fallback={<p>Fallback! </p>}>
               I show up!
             </If> */}
@@ -96,7 +92,7 @@ function BlogIndex(props) {
                     style={{}}
                     key={post.title}
                     className={`${
-                      !((i + 1) % 2 == 0) && "tp:mr-[14.28%]"
+                      !((i + 1) % 2 === 0) && "tp:mr-[14.28%]"
                     } tp:w-[41.9%] pb-12 list__item ${
                       !limitedPosts.isInitial && "opacity-0"
                     }`}
@@ -136,7 +132,7 @@ function BlogIndex(props) {
           </Box>
         </Box>
       </Box.Main>
-      <footer id="colophon" className="h-screen d:pl-[10%]">
+      <footer id="colophon" className="h-screen ">
         <Footer />
       </footer>
     </>

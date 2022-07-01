@@ -11,7 +11,7 @@
     span {
       font-size: 0.8em;
     }
-    color: $secondary;
+    color: var(--secondary);
   }
 
   &__list__item__link,
@@ -22,7 +22,7 @@
     vertical-align: middle;
   }
   &__subnav__list__item__link {
-    color: white;
+    color: var(--white);
   }
   &__subnav__list__item {
     display: inline-block;
@@ -36,7 +36,7 @@
       &__item {
         &__link {
           &:hover {
-            text-shadow: 0 0 6px $secondary;
+            text-shadow: 0 0 6px var(--second);
             animation: flicker 1s forwards;
           }
 
@@ -75,7 +75,7 @@
             transition: color 0.3s ease;
 
             &:hover {
-              color: $secondary;
+              color: var(--secondary);
             }
           }
         }

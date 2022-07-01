@@ -1,7 +1,7 @@
 import * as React from "react"
 
-import { Box, Heading, List, ListItem, Header, Loader } from "../atoms"
-import { GatsbyImage } from "gatsby-plugin-image"
+import { Box, Heading, List, ListItem, Loader } from "../atoms"
+// import { GatsbyImage } from "gatsby-plugin-image"
 
 export default function EventsCalItems({ isLoading, isError, data }) {
   if (isLoading) {
@@ -79,7 +79,7 @@ function getReadableDate(dateTime) {
 function getBiggest16x9(array) {
   let whichImages
   let hasCustom = array.filter((img) => {
-    img.url.includes("dbimages")
+    return img.url.includes("dbimages")
   })
   if (hasCustom.length >= 2) {
     whichImages = hasCustom
@@ -88,7 +88,7 @@ function getBiggest16x9(array) {
   }
 
   let aspect16 = whichImages.filter((img) => {
-    return img.ratio == "16_9"
+    return img.ratio === "16_9"
   })
   aspect16.sort((a, b) => {
     return b.width - a.width
@@ -103,7 +103,7 @@ function getBiggest16x9(array) {
 function getSmallest16x9({ images, name }) {
   let whichImages
   let hasCustom = images.filter((img) => {
-    img.url.includes("dbimages")
+    return img.url.includes("dbimages")
   })
   if (hasCustom.length >= 2) {
     whichImages = hasCustom
@@ -113,7 +113,7 @@ function getSmallest16x9({ images, name }) {
 
   // images.forEach((im) => console.log(`${name} with ${im.url}`));
   let aspect16 = whichImages.filter((img) => {
-    return img.ratio == "16_9"
+    return img.ratio === "16_9"
   })
   aspect16.sort((a, b) => {
     return a.width - b.width
@@ -138,7 +138,7 @@ function reshapeEventsData(events) {
       startDate
     )
     let correspondingObj = byMonth.find((obj) => {
-      return obj.month == month && obj.year == year
+      return obj.month === month && obj.year === year
     })
     if (correspondingObj) {
       correspondingObj.events.push(event)

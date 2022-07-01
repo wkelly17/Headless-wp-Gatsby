@@ -1,8 +1,15 @@
-import React, { createContext, useEffect, useState } from "react"
+import React, { createContext } from "react"
 import {
   ExitFromNewsArchiveToSingle,
   initialPageAnimation,
   ExitToHomeFromMastheadLogo,
+  Home2EventsExit,
+  EventsFromHomeEntry,
+  Home2VenueExit,
+  toVenueEnter,
+  Home2News,
+  NewsFromHomeEnter,
+  toNewsSingleLeave,
 } from "../animations/pageTransitions"
 
 const AnimationContext = createContext()

@@ -12,17 +12,28 @@
 
 ---------------------------------------------------------------- */
 
-$primary: #da3d1d; // red #E34626 is actual brand color but not conformant
-$primary-dark: #c32606; // text links on teal bg
-$secondary: #ead930; // yellow
-$tertiary: #c9e9eb; // teal
+:root {
+  --primary: theme(colors.primary);
+  --secondary: theme(colors.secondary);
+  --tertiary: theme(colors.tertiary);
+  --grayDarker: theme(colors.grayDarker);
+  --grayDark: theme(colors.grayDark);
+  --grayLight: theme(colors.grayLight);
+  --grayLighter: theme(colors.grayLighter);
+  --white: theme(colors.white);
 
-$gray-darker: #414042;
-$gray-dark: #666;
-$gray: #767676; /// was #999 but isn't conformant on white
-$gray-light: #eee;
-$gray-lighter: #f7f7f7;
-$white: #fff;
+  --fontCompressed: theme(fontFamily.compressed);
+  --fontCondensed: theme(fontFamily.condensed);
+  --fontRegular: theme(fontFamily.regular);
+  --fontExtended: theme(fontFamily.extended);
+
+  --spaceRow: theme(spacing.row);
+  --spaceRow2: theme(spacing.row2);
+  --spaceRow3: theme(spacing.row3);
+
+  --weightNormal: theme(fontWeight.normal);
+  --weightBold: theme(fontWeight.bold);
+}
 
 html {
   font-size: 14px;
@@ -35,7 +46,8 @@ html {
     padding-top: 5rem;
   }
   #search {
-    @apply border-2 border-primary mx-4;
+    border: 2px solid var(--primary);
+    margin: 0 1rem;
   }
   h1 {
     font-size: 2rem;
@@ -51,13 +63,14 @@ html {
 }
 
 body {
-  @apply font-regular text-grayDarker;
+  font-family: var(--fontRegular);
+  color: var(--grayDarker);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  @apply bg-secondary;
+  background: var(--secondary);
 }
 
 h1,
@@ -72,12 +85,13 @@ h5,
 .h5,
 h6,
 .h6 {
-  @apply text-grayDarker;
+  color: var(--grayDarker);
 }
 
 h1,
 .h1 {
-  @apply font-normal font-compressed;
+  font-weight: var(--weightNormal);
+  font-family: var(--fontCompressed);
   font-size: 14.2857143rem;
   line-height: 0.9;
   text-transform: uppercase;
@@ -89,7 +103,8 @@ h1,
 
 h2,
 .h2 {
-  @apply font-bold font-extended;
+  font-weight: var(--weightBold);
+  font-family: var(--fontExtended);
   font-size: 2.57142857rem;
   line-height: 1.2;
   text-transform: uppercase;
@@ -101,8 +116,8 @@ h2,
 
 h3,
 .h3 {
-  @apply font-regular font-normal;
-
+  font-weight: var(--weightNormal);
+  font-family: var(--fontRegular);
   font-size: 2.14285714rem;
   line-height: 1.25;
   text-transform: none;
@@ -110,7 +125,8 @@ h3,
 
 h4,
 .h4 {
-  @apply font-extended font-bold;
+  font-weight: var(--weightBold);
+  font-family: var(--fontExtended);
   font-size: 1rem;
   line-height: 1.33333;
   text-transform: uppercase;
@@ -122,7 +138,8 @@ h4,
 
 h5,
 .h5 {
-  @apply font-condensed font-bold;
+  font-weight: var(--weightBold);
+  font-family: var(--fontCondensed);
   font-size: 1.71428571rem;
   line-height: 1.16667;
   text-transform: uppercase;
@@ -130,7 +147,8 @@ h5,
 
 h6,
 .h6 {
-  @apply font-condensed font-normal;
+  font-family: var(--fontCondensed);
+  font-weight: var(--weightNormal);
   font-size: 1.28571429rem;
   line-height: 1.33333;
   text-transform: uppercase;
@@ -145,17 +163,13 @@ h6,
   margin: 0;
 }
 
-@include min(tablet-portrait) {
-  //content
-}
-
-@include min(tablet-landscape) {
+@screen tl {
   html {
     font-size: 16px;
   }
 }
 
-@include min(desktop) {
+@screen d {
   html {
     font-size: 18px;
   }
@@ -199,12 +213,8 @@ h6,
   }
 }
 
-@include min(desktop-large) {
-  //content
-}
-
 a {
-  @apply text-primary;
+  color: var(--primary);
 }
 address {
   font-style: normal;
@@ -230,11 +240,4 @@ ul {
       list-style: square;
     }
   }
-}
-
-.-translate-half {
-  transform: translate(-50%);
-}
-.translate-half {
-  transform: translate(50%);
 }

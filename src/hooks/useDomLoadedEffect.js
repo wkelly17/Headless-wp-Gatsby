@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useToggle } from "react-use"
 
 export function useDomLoadedEffect(domLogicFxn, rerenderDeps) {

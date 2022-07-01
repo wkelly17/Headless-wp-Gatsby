@@ -1,21 +1,12 @@
-import React, { useState, useRef, useEffect } from "react"
-import {
-  Box,
-  Header,
-  List,
-  ListItem,
-  Button,
-  LinesRecords,
-  If,
-  IconCloseSvg,
-} from "../atoms"
+import React, { useState, useRef } from "react"
+import { Box, Header, Button, LinesRecords, If, IconCloseSvg } from "../atoms"
 import { Nav } from "../molecules"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import TransitionLink from "gatsby-plugin-transition-link"
 import { StaticImage } from "gatsby-plugin-image"
 import { Dialog } from "@headlessui/react"
 import { gsap } from "gsap"
-import { useLockBodyScroll, useToggle, useUpdateEffect } from "react-use"
+import { useToggle } from "react-use"
 import { LinesRecordsNav, mastHeadToggle } from "../../animations/interactions"
 import { getTransLinkProps } from "../../animations/transitionLinkProps"
 import { AnimationContext } from "../../context/AnimationContext"
@@ -41,7 +32,6 @@ export default function Masthead(props) {
   const data = useStaticQuery(queryString)
   const { wpMenu: flatMenu } = data
   const wpMenu = flatListToHierarchical(flatMenu.menuItems.nodes)
-  const [locked, toggleLocked] = useToggle(false)
 
   let { isRendered, toggleIsRendered } = useDomLoadedEffect(() => {
     if (isRendered) {
@@ -51,7 +41,6 @@ export default function Masthead(props) {
         dialogRef,
         recordTl,
         isOpen,
-        toggleLocked,
         toggleIsRendered,
         setDialogIsClosing
       )
@@ -107,53 +96,56 @@ export default function Masthead(props) {
             </span>
           </Button>
         </Box>
-        <If data={isRendered}>
-          <Dialog
-            static
-            open={isOpen}
-            onClose={(e) => {
-              console.log("dialog close!")
-              setDialogIsClosing(true)
-              toggleIsOpen()
-            }}
-            id="drawer-outter"
-            className="z-[1] top-0 fixed h-full w-full left:0  d:left-[10%] d:pt-0 d:w-[90%] -translate-x-full dmax:overflow-hidden "
-            ref={(ref) => (dialogRef.current.node = ref)}
-          >
-            <Box id="drawer-inner" className="relative h-full ">
-              <Box
-                id="drawer"
-                className="grid h-full text-white pt-[20%] d:p-0 grid-cols-20 d:grid-cols-18 bg-grayDarker"
-              >
-                <Box className="self-center col-start-3 row-start-1 pt-12 pb-8 col-span-auto d:col-start-8 col-span-16 d:col-span-10 d:pt-0 d:pb-0">
-                  <Nav.Recursive
-                    items={wpMenu}
-                    topLevelListItemClassNames="pb-8"
-                    subNavClasses="mt-8"
-                  />
-                </Box>
+        <If
+          data={isRendered}
+          component={
+            <Dialog
+              static
+              open={isOpen}
+              onClose={(e) => {
+                console.log("dialog close!")
+                setDialogIsClosing(true)
+                toggleIsOpen()
+              }}
+              id="drawer-outter"
+              className="z-[1] top-0 fixed h-full w-full left:0  d:left-[10%] d:pt-0 d:w-[90%] -translate-x-full dmax:overflow-hidden "
+              ref={(ref) => (dialogRef.current.node = ref)}
+            >
+              <Box id="drawer-inner" className="relative h-full ">
                 <Box
-                  id="navLinesRecords"
-                  className="col-span-full d:col-start-1 d:col-span-6 mastheadIllo d:ml-0   d:relative ml-[50%] row-start-2 d:row-start-1"
+                  id="drawer"
+                  className="grid h-full text-white pt-[20%] d:p-0 grid-cols-20 d:grid-cols-18 bg-grayDarker"
                 >
-                  <LinesRecords className="right-0 d:-translate-y-1/2 d:absolute d:ml-0 top-1/2 !ml-[-560px] " />
+                  <Box className="self-center col-start-3 row-start-1 pt-12 pb-8 col-span-auto d:col-start-8 col-span-16 d:col-span-10 d:pt-0 d:pb-0">
+                    <Nav.Recursive
+                      items={wpMenu}
+                      topLevelListItemClassNames="pb-8"
+                      subNavClasses="mt-8"
+                    />
+                  </Box>
+                  <Box
+                    id="navLinesRecords"
+                    className="col-span-full d:col-start-1 d:col-span-6 mastheadIllo d:ml-0   d:relative ml-[50%] row-start-2 d:row-start-1"
+                  >
+                    <LinesRecords className="right-0 d:-translate-y-1/2 d:absolute d:ml-0 top-1/2 !ml-[-560px] " />
+                  </Box>
+                  <Button
+                    id="drawer-close"
+                    tabIndex={0}
+                    onClick={() => {
+                      toggleIsOpen()
+                      toggleIsRendered(true)
+                    }}
+                    className="text-transparent focus:text-primary focus:outline-primary  block d:pt-[10%] !absolute top-0 right-0 w-[10%]"
+                  >
+                    <span className="sr-only">Close Drawer</span>
+                    <IconCloseSvg className="absolute transition-colors duration-300 ease-linear transform -translate-x-1/2 -translate-y-1/2 !fill-current text-inherit left-1/2 top-1/2" />
+                  </Button>
                 </Box>
-                <Button
-                  id="drawer-close"
-                  tabIndex={0}
-                  onClick={() => {
-                    toggleIsOpen()
-                    toggleIsRendered(true)
-                  }}
-                  className="text-transparent focus:text-primary focus:outline-primary  block d:pt-[10%] !absolute top-0 right-0 w-[10%]"
-                >
-                  <span className="sr-only">Close Drawer</span>
-                  <IconCloseSvg className="absolute transition-colors duration-300 ease-linear transform -translate-x-1/2 -translate-y-1/2 !fill-current text-inherit left-1/2 top-1/2" />
-                </Button>
               </Box>
-            </Box>
-          </Dialog>
-        </If>
+            </Dialog>
+          }
+        />
       </Header>
     </Box>
   )

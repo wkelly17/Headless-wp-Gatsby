@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 const Heading = forwardRef(
   (
     {
-      children,
+      children = null,
       as = "h1",
       className,
       wrapInHeader,
@@ -19,7 +19,7 @@ const Heading = forwardRef(
 
     React.useEffect(() => {
       if (!split) return
-      let node = document.querySelector(split.selector)
+      let node = split.getter()
       split.fxn(node)
     }, [])
 

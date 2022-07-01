@@ -1,6 +1,5 @@
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { useForm, Controller } from "react-hook-form"
-import TextField from "./formFields/TextField"
 import { graphql } from "gatsby"
 import {
   assignFields,
@@ -16,9 +15,9 @@ export default function GravityForm({
   confirmationFunction,
   footerClassName = "",
 }) {
-  // console.log(props)
   let fields = form.formFields.nodes
   let formId = form.databaseId
+
   const mutation = useSubmitGravityForm({ id: formId, fieldValues: [] })
   let [bounceTl, setBounceTl] = useState()
 
@@ -29,16 +28,14 @@ export default function GravityForm({
 
     setBounceTl(tl)
   }, [])
-
   let fieldTypeMap = fields.map((field) => {
     return shapeFieldsToGfSchema(field)
   })
-  // console.log({ formId })
 
   const {
     register,
     handleSubmit,
-    watch,
+    // watch,
     formState: { errors },
     reset,
     control,
@@ -49,10 +46,23 @@ export default function GravityForm({
     console.log({ data })
 
     let result = Object.entries(data)
-    let formVals = result.map((input, idx) => {
-      return reshapeDataForSubmit(input, idx, fieldTypeMap)
+    debugger
+    let nonFileLists = []
+    let fileLists = []
+    result.forEach((tuple) => {
+      if (tuple[1] instanceof FileList) {
+        fileLists.push(tuple)
+      } else {
+        nonFileLists.push(tuple)
+      }
     })
 
+    let formVals = nonFileLists.map((input, idx) => {
+      return reshapeDataForSubmit(input, idx, fieldTypeMap)
+    })
+    let fileVals = fileLists.map((input, idx) => {
+      return reshapeDataForSubmit(input, idx, fieldTypeMap)
+    })
     let response = await mutation.mutateAsync({
       id: formId,
       fieldValues: formVals,
@@ -65,13 +75,14 @@ export default function GravityForm({
       }
     } else {
       // todo: a default confirmation message fade in above the submit btn;
+      reset()
     }
   }
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={`gform ${formClassName}`}
+      className={`gform ${formClassName} `}
       id={`gform-${formId}`}
     >
       <div className="formInnerWrapper dmax:h-24">
@@ -81,9 +92,8 @@ export default function GravityForm({
           fields.map((formField) => {
             let Component = assignFields(formField.type)
 
-            if (Component && Component.name == "SelectField") {
+            if (Component && Component.name === "SelectField") {
               let isMultiSelect = formField.type === "MULTISELECT"
-
               return (
                 <>
                   <Controller
@@ -98,6 +108,25 @@ export default function GravityForm({
                           formField={formField}
                           errors={errors}
                           isMultiSelect={isMultiSelect}
+                        />
+                      )
+                    }}
+                  />
+                </>
+              )
+            } else if (Component && Component.name === "DateField") {
+              return (
+                <>
+                  <Controller
+                    name={String(formField.id)}
+                    control={control}
+                    rules={{ required: formField.isRequired }}
+                    render={({ field }) => {
+                      return (
+                        <Component
+                          {...field}
+                          formField={formField}
+                          errors={errors}
                         />
                       )
                     }}
@@ -303,6 +332,26 @@ export const query = graphql`
           value
           phoneFormat
           placeholder
+        }
+        ... on WpFileUploadField {
+          id
+          isRequired
+          label
+          value
+          maxFileSize
+          canAcceptMultipleFiles
+        }
+        ... on WpDateField {
+          id
+          inputName
+          type
+          placeholder
+          label
+          isRequired
+          inputType
+          description
+          dateType
+          dateFormat
         }
       }
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react"
+import React, { useState, useMemo, Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { Document as flexDocument } from "flexsearch"
 import { encode as advancedEncode } from "flexsearch/dist/module/lang/latin/advanced.js"
@@ -7,11 +7,11 @@ import { useDebounce } from "react-use"
 
 export default function Search({ openSearchDialog, setOpenSearchDialog }) {
   const data = useStaticQuery(queryString)
-  const [searchTerm, setSearchTerm] = React.useState("")
-  const [state, setState] = React.useState("")
-  const [val, setVal] = React.useState("")
+  const [searchTerm, setSearchTerm] = useState("")
+  const [state, setState] = useState("")
+  // const [val, setVal] = useState("")
   const { index, store } = data.allLocalSearchWpSearch.nodes[0]
-  const id = React.useMemo(() => {
+  const id = useMemo(() => {
     let idx = new flexDocument({
       id: "id",
       preset: "score",
@@ -108,7 +108,7 @@ export default function Search({ openSearchDialog, setOpenSearchDialog }) {
                 <div className="z-10 w-4/5 mx-auto my-8 overflow-scroll bg-gray-200 h-4/5 ">
                   {results &&
                     results.map((item, idx) => {
-                      if (item.nodeType == "MediaItem") {
+                      if (item.nodeType === "MediaItem") {
                         return <p key={item.title}>Skipping media</p>
                       } else {
                         return (

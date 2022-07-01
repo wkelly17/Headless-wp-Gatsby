@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react"
+import React, { createContext } from "react"
 import { useMediaQuery } from "react-responsive"
 import { useMedia } from "react-use"
 
@@ -7,6 +7,7 @@ const ResponsiveContext = createContext()
 const ResponsiveProvider = ({ children }) => {
   const isDesktop = useMedia("(min-width: 1200px)")
   const isTouch = useMedia("(pointer:coarse)")
+  const [fakerInstance, setFakerInstace] = React.useState(false)
 
   console.log({ isDesktop, isTouch })
 
@@ -57,6 +58,8 @@ const ResponsiveProvider = ({ children }) => {
         Default,
         isDesktop,
         isTouch,
+        fakerInstance,
+        setFakerInstace,
       }}
     >
       {children}

@@ -196,7 +196,7 @@ export function splitEventText(node) {
 
   if (!node) return
 
-  let sign = new SplitText(node, {
+  new SplitText(node, {
     type: "words,chars",
     wordsClass: "split__word",
     charsClass: "split__char",
@@ -209,7 +209,6 @@ export function mastHeadToggle(
   dialogRef,
   recordTl,
   isOpen,
-  toggleLocked,
   toggleIsRendered,
   setDialogIsClosing
 ) {
@@ -254,7 +253,6 @@ export function mastHeadToggle(
     tl.play()
   }
   dialogRef.current.isOpen = !dialogRef.current.isOpen
-  toggleLocked()
 }
 
 export function animateVenueToothPick(selector) {

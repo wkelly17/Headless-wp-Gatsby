@@ -30,13 +30,13 @@ export default function SelectField({
 }) {
   let {
     choices,
-    defaultVale,
-    description,
+    // defaultValue,
+    // description,
     id,
-    isRequired,
+    // isRequired,
     label,
-    placeholder,
-    value,
+    // placeholder,
+    // value,
   } = formField
 
   let options = choices.map((choice) => {
@@ -64,19 +64,20 @@ export default function SelectField({
   )
 }
 
-let colors = [
-  "hsla(0, 50%, 50%, .5)",
-  "hsla(40, 50%, 50%, .5)",
-  "hsla(80, 50%, 50%, .5)",
-  "hsla(120, 50%, 50%, .5)",
-  "hsla(160, 50%, 50%, .5)",
-  "hsla(200, 50%, 50%, .5)",
-  "hsla(240, 50%, 50%, .5)",
-  "hsla(280, 50%, 50%, .5)",
-  "hsla(320, 50%, 50%, .5)",
-]
+// let colors = [
+//   "hsla(0, 50%, 50%, .5)",
+//   "hsla(40, 50%, 50%, .5)",
+//   "hsla(80, 50%, 50%, .5)",
+//   "hsla(120, 50%, 50%, .5)",
+//   "hsla(160, 50%, 50%, .5)",
+//   "hsla(200, 50%, 50%, .5)",
+//   "hsla(240, 50%, 50%, .5)",
+//   "hsla(280, 50%, 50%, .5)",
+//   "hsla(320, 50%, 50%, .5)",
+// ]
 
-const customStyles = {
+// E.G. Custom styles in React Select
+/* const customStyles = {
   option: (provided, state) => ({
     ...provided,
     borderBottom: `1px dotted ${colors[0]}`,
@@ -110,39 +111,39 @@ const customStyles = {
       border: "solid blue 1px",
     }
   },
-}
+} */
 
-const Control = ({ children, ...props }) => {
-  return (
-    <components.Control {...props}>
-      <span className="px-8 bg-red-400">Hi</span>
-      {children}
-    </components.Control>
-  )
-}
-const Option = ({ children, ...props }) => {
-  //
-  const { isDisabled, isFocused, isSelected } = props
+// const Control = ({ children, ...props }) => {
+//   return (
+//     <components.Control {...props}>
+//       <span className="px-8 bg-red-400">Hi</span>
+//       {children}
+//     </components.Control>
+//   )
+// }
+// const Option = ({ children, ...props }) => {
+//   //
+//   const { isDisabled, isFocused, isSelected } = props
 
-  return (
-    <components.Option {...props}>
-      <div
-        className={`w-full p-0 ${isFocused && "bg-primary text-white"} ${
-          isSelected && "bg-secondary text-black"
-        }`}
-      >
-        {children}
-      </div>
-    </components.Option>
-  )
-}
-const MenuList = ({ children, ...props }) => {
-  //
-  const { isDisabled, isFocused, isSelected } = props
+//   return (
+//     <components.Option {...props}>
+//       <div
+//         className={`w-full p-0 ${isFocused && "bg-primary text-white"} ${
+//           isSelected && "bg-secondary text-black"
+//         }`}
+//       >
+//         {children}
+//       </div>
+//     </components.Option>
+//   )
+// }
+// const MenuList = ({ children, ...props }) => {
+//   //
+//   const { isDisabled, isFocused, isSelected } = props
 
-  return (
-    <components.MenuList {...props}>
-      <div className={"bg-gray-200 p-0"}>{children}</div>
-    </components.MenuList>
-  )
-}
+//   return (
+//     <components.MenuList {...props}>
+//       <div className={"bg-gray-200 p-0"}>{children}</div>
+//     </components.MenuList>
+//   )
+// }

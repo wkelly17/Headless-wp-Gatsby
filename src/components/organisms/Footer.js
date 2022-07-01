@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Heading, Button } from "../atoms"
-import { useStaticQuery, graphql, Link } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import GravityForm from "../gravityForms/GravityForm"
 import { NewsletterSuccessFxn } from "../../animations/interactions"
 import { MarqueeAnimate } from "../../animations/interactions"

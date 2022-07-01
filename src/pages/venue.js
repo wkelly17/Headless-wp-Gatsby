@@ -1,9 +1,7 @@
 import * as React from "react"
-import { graphql, Link } from "gatsby"
-import { useMount } from "react-use"
-
+import { graphql } from "gatsby"
 import { GatsbyImage, StaticImage, getImage } from "gatsby-plugin-image"
-
+import { DOM } from "../constants/constants"
 import {
   Box,
   Heading,
@@ -20,7 +18,6 @@ import {
 } from "../components/atoms"
 import { HubPane, VenueSwiper } from "../components/molecules"
 import { Footer } from "../components/organisms"
-
 import {
   VenueHeroSt,
   animateVenueToothPick,
@@ -29,11 +26,8 @@ import {
   tlVenueMartini,
 } from "../animations/interactions"
 import illoToothpick from "../images/illo-toothpick.svg"
-import venueIlloSputnik from "../images/illo-sputnik.svg"
 import sputnikPatternDots from "../images/pattern-dots.svg"
 import sputnikBg from "../images/sputnik-bg.svg"
-
-console.log({ illoToothpick })
 
 export default function VenuePage(props) {
   const { wpPage, allWp } = props.data
@@ -65,9 +59,9 @@ export default function VenuePage(props) {
 
   return (
     <>
-      <Box.Main id="venue" className="bg-white d:ml-row2">
+      <Box.Main id={DOM.venue.id} className="bg-white ">
         <Box
-          id="venue-intro"
+          id={DOM.venueIntro.id}
           className="relative h-auto text-center bg-secondary d:border-b-4 d:border-grayDarker"
         >
           <Header className={"venue__header overflow-hidden relative"}>
@@ -99,7 +93,7 @@ export default function VenuePage(props) {
                 <SVGLinesDoors />
               </Box>
               <Box
-                id="venue-hero"
+                id={DOM.venueHero.id}
                 className="w-full h-full left-0 top-0  z-[1] absolute opacity-0 invisible"
               >
                 <GatsbyImage
@@ -141,7 +135,7 @@ export default function VenuePage(props) {
                 {/* toothpick */}
               </Box>
               <Box
-                id="venue-illo-toothpick"
+                id={DOM.illoToothpick.id}
                 className="relative col-start-8 col-end-4 overflow-hidden "
                 style={{
                   background: `url(${illoToothpick}) 40% 56.0352% / 150% no-repeat`,
@@ -149,7 +143,7 @@ export default function VenuePage(props) {
               >
                 <Box className="absolute bottom-0 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                   <IlloToothPickSvg
-                    id="illo-toothpick"
+                    id={DOM.illoToothpick.id}
                     className="fill-current w-[20vw] d:w-[10vw] overflow-hidden"
                   />
                 </Box>
@@ -190,7 +184,7 @@ export default function VenuePage(props) {
                   return (
                     <ListItem
                       className={`${
-                        idx % 2 == 0 && "tp:mr-[14%]"
+                        idx % 2 === 0 && "tp:mr-[14%]"
                       } tp:w-[42.8%] d:pb-8 pb-4`}
                     >
                       <Heading className="pt-2 h5">{field.headline}</Heading>
@@ -214,14 +208,14 @@ export default function VenuePage(props) {
           </Box>
         </Box.Section>
         <Box
-          id="venue-illo-sputnik"
+          id={DOM.venueIlloSputnik.id}
           className="relative h-auto border-b-2 !bg-tertiary border-grayDarker d:border-b-4"
           style={{
             background: `url(${sputnikPatternDots})`,
           }}
         >
           <span
-            id="venue-illo-sputnik-svg"
+            id={DOM.venueIlloSputnikSvg.id}
             className="block h-[50vh] relative w-[50vh] d:after:w-[80vw] after:bg-tertiary after:content-[''] after:block after:h-full after:left-[99%] after:absolute after:top-0  after:w-full"
             style={{
               background: `url(${sputnikBg}) no-repeat 0/contain`,
@@ -264,7 +258,7 @@ export default function VenuePage(props) {
               </Box>
 
               <HubPane
-                id="venue-lines-stereo"
+                id={DOM.venueLinesStereo.id}
                 className="col-start-8 col-end-4 innerPaneObjects bg-secondary col-span-full "
                 classKeys={["noOverflow"]}
               >
@@ -293,7 +287,7 @@ export default function VenuePage(props) {
                     <ListItem
                       key={item.headline}
                       className={`pb-8 tp:w-[28%] ${
-                        (idx == 0 || !((idx + 1) % 3 == 0)) && "tp:mr-[7%]"
+                        (idx === 0 || !((idx + 1) % 3 === 0)) && "tp:mr-[7%]"
                       }`}
                     >
                       <Heading as="h3" className="pb-2 h5">
@@ -326,7 +320,7 @@ export default function VenuePage(props) {
           </Box>
         </Box.Section>
       </Box.Main>
-      <footer id="colophon" className="h-screen d:pl-[10%]">
+      <footer id={DOM.colophon.id} className="h-screen ">
         <Footer />
       </footer>
     </>

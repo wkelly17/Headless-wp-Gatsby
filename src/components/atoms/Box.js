@@ -1,7 +1,7 @@
 import React from "react"
 import { forwardRef } from "react"
 
-const Box = forwardRef(({ children, as = "div", ...props }, ref) => {
+const Box = forwardRef(({ children = null, as = "div", ...props }, ref) => {
   const Component = as
 
   return (
@@ -39,6 +39,20 @@ Box.Nav = forwardRef(({ children, ...props }, ref) => {
     <nav ref={ref} {...props}>
       {children}
     </nav>
+  )
+})
+Box.Article = forwardRef(({ children, ...props }, ref) => {
+  return (
+    <article ref={ref} {...props}>
+      {children}
+    </article>
+  )
+})
+Box.Footer = forwardRef(({ children, ...props }, ref) => {
+  return (
+    <footer ref={ref} {...props}>
+      {children}
+    </footer>
   )
 })
 export default Box

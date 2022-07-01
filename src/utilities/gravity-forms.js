@@ -1,5 +1,3 @@
-import { GraphQLClient, gql } from "graphql-request"
-import { useQuery } from "react-query"
 import {
   TextField,
   Checkbox,
@@ -13,7 +11,11 @@ import {
   TimeField,
   PhoneField,
   WebsiteField,
+  FileField,
+  DateField,
 } from "../components/gravityForms/formFields"
+import { v4 as uuidv4 } from "uuid"
+import { format } from "date-fns"
 
 export function assignFields(type) {
   switch (type) {
@@ -43,16 +45,22 @@ export function assignFields(type) {
       return PhoneField
     case "WEBSITE":
       return WebsiteField
+    case "FILEUPLOAD":
+      // console.log("not supported yet", type)
+      // return undefined
+      //todo: debug file upload;  Not working for whatever reason;
+      return FileField
+    case "DATE":
+      return DateField
 
     default:
       console.log("not supported yet", type)
       return undefined
-      break
   }
 }
 
 export function shapeFieldsToGfSchema(field) {
-  console.log(field)
+  // console.log(field)
   switch (field.type) {
     case "ADDRESS":
       return {
@@ -102,7 +110,20 @@ export function shapeFieldsToGfSchema(field) {
         values: [],
         type: field.type,
       }
-
+    case "FILEUPLOAD":
+      return {
+        id: field.id,
+        name: null,
+        type: field.type,
+        size: null,
+        tmp_name: "/var/tmp/",
+      }
+    case "DATE":
+      return {
+        id: field.id,
+        format: field.dateFormat,
+        type: field.type,
+      }
     default:
       return {
         id: field.id,
@@ -114,8 +135,9 @@ export function shapeFieldsToGfSchema(field) {
 export function reshapeDataForSubmit(input, idx, fieldTypeMap) {
   let [id, vals] = input
   if (Array.isArray(vals)) {
-    vals = vals.filter((val) => val != undefined)
+    vals = vals.filter((val) => val !== undefined)
   }
+  // eslint-disable-next-line eqeqeq
   let correspondingType = fieldTypeMap.find((obj) => obj.id == id)
   let reshaped = {}
 
@@ -181,6 +203,34 @@ export function reshapeDataForSubmit(input, idx, fieldTypeMap) {
       }
       break
 
+    case "FILEUPLOAD":
+      let filesArr = [...vals].map((val) => {
+        let tmpName = val.name.replaceAll(" ", "-")
+        let type = val.type.split("/")[1]
+        let file = {
+          name: val.name,
+          type: val.type,
+          size: val.size,
+          // tmp_name: `/var/tmp/${uuidv4()}.${type}`,
+        }
+        return file
+      })
+      reshaped = {
+        databaseId: Number(id),
+        fileUploadValues: filesArr,
+      }
+      break
+
+    case "DATE":
+      let formatSchema = correspondingType.format
+      let formatted = formatDate(vals, formatSchema)
+
+      reshaped = {
+        id: Number(id),
+        value: formatted,
+      }
+      break
+
     default:
       reshaped = {
         id: Number(id),
@@ -189,4 +239,25 @@ export function reshapeDataForSubmit(input, idx, fieldTypeMap) {
       break
   }
   return reshaped
+}
+
+function formatDate(val, formatSchema) {
+  switch (formatSchema) {
+    case "MDY":
+      return format(val, "MM/dd/yyyy")
+    case "DMY":
+      return format(val, "dd/MM/yyyy")
+    case "DMY_DASH":
+      return format(val, "dd-MM-yyyy")
+    case "DMY_DOT":
+      return format(val, "dd.MM.yyyy")
+    case "YMD_SLASH":
+      return format(val, "yyyy/MM/dd")
+    case "YMD_DASH":
+      return format(val, "yyyy-MM-dd")
+    case "YMD_DOT":
+      return format(val, "yyyy.MM.dd")
+    default:
+      break
+  }
 }

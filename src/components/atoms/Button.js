@@ -9,7 +9,7 @@ const buttonClassNames = {
   link: "btn-link text-grayDarker after:content-[''] after:h-[1em] after:mt-0 after:mr-0 after:mb-[-3px] after:ml-2 after:w-[1em]",
 }
 
-function Button({ children, className, type, ...restProps }) {
+function Button({ children, className = "", type, ...restProps }) {
   return (
     <button
       {...restProps}
@@ -25,7 +25,7 @@ Button.Link = function ButtonLink({
   children,
   to,
   type,
-  className,
+  className = "",
   ...restProps
 }) {
   return (

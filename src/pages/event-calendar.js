@@ -1,21 +1,18 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import { useStaticQuery, Link } from "gatsby"
-import TransitionLink from "gatsby-plugin-transition-link"
-import { gsap } from "gsap"
-import GravityForm from "../components/gravityForms/GravityForm"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { Box, Heading, Header } from "../components/atoms"
 import { HubPane, EventsCalItems } from "../components/molecules"
 import { Footer } from "../components/organisms"
 import { useGetTicketMaster } from "../api/queries"
 import { splitEventText } from "../animations/interactions"
+import { DOM } from "../constants/constants"
 
 export default function EventsPage(props) {
   // const { wpPage } = props.data
   console.log(props.data)
   const { myOptionsPage } = props.data.allWp.nodes[0]
-  const { isLoading, isError, data, error } = useGetTicketMaster()
+  const { isLoading, isError, data } = useGetTicketMaster()
 
   console.log({ isLoading, isError, data })
 
@@ -23,8 +20,8 @@ export default function EventsPage(props) {
 
   return (
     <Box.Main
-      className="text-black bg-white border-b-2 d:ml-row2 d:border-b-4 border-grayDarker"
-      id="calendar"
+      className="text-black bg-white border-b-2 d:border-b-4 border-grayDarker"
+      id={DOM.calendar.id}
     >
       {/* {page.slug} */}
       <Box className="">
@@ -47,9 +44,9 @@ export default function EventsPage(props) {
             >
               <Heading
                 className="font-normal text-center !text-white h4"
-                id="events-splitHeader"
+                id={DOM.eventsSplit.id}
                 split={{
-                  selector: "#events-splitHeader",
+                  getter: DOM.eventsSplit.get,
                   fxn: splitEventText,
                 }}
               >
@@ -65,7 +62,7 @@ export default function EventsPage(props) {
             />
           </Box>
         </Box>
-        <footer id="colophon" className="h-screen">
+        <footer id={DOM.colophon.id} className="h-screen ">
           <Footer />
         </footer>
       </Box>

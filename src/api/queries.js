@@ -1,12 +1,10 @@
 import { useQuery, useMutation } from "react-query"
 import { GraphQLClient, gql } from "graphql-request"
-import { useLocalStorage } from "react-use"
 const API_URL = "http://localhost:8888/WpeAtlasTestBackend/graphql"
 console.log(API_URL)
 const graphQLClient = new GraphQLClient(API_URL)
 
 export function useGetPosts() {
-  console.log("running get posts")
   let queryFn = async () => {
     let query2 = gql`
       {
@@ -26,12 +24,11 @@ export function useGetPosts() {
 }
 
 export function useLogin() {
-  console.log("running useLogin")
   let storedLogin
   if (localStorage.getItem("jwt")) {
     storedLogin = JSON.parse(localStorage.getItem("jwt"))
   }
-  const [login, setLogin, removeLogin] = useLocalStorage("jwt", "")
+  // const [login, setLogin, removeLogin] = useLocalStorage("jwt", "")
 
   let queryFn = async () => {
     console.log("trying login")
@@ -50,16 +47,16 @@ export function useLogin() {
     const data = await graphQLClient.request(mutation)
 
     console.log({ data })
-    let { authToken, refreshToken } = data.login
+    // let { authToken, refreshToken } = data.login
     //300,000 = 300 seconds in MS; or 5 mins;
-    if (data.login) {
-      setLogin({
-        authToken,
-        refreshToken,
-        expires: 300000,
-        current: Date.now(),
-      })
-    }
+    // if (data.login) {
+    //   setLogin({
+    //     authToken,
+    //     refreshToken,
+    //     expires: 300000,
+    //     current: Date.now(),
+    //   })
+    // }
     return data
   }
 
@@ -90,7 +87,6 @@ export function useLogin() {
 }
 
 export function useGravityForm(id) {
-  console.log("get GF")
   let queryFn = async () => {
     let query = gql`
       query MyQuery($id: ID = "1") {
@@ -149,7 +145,7 @@ export function useGravityForm(id) {
     let variables = {
       id: id,
     }
-    console.log({ variables })
+
     const data = await graphQLClient.request(query, variables)
     console.log({ data })
     return data
@@ -175,7 +171,14 @@ export function useSubmitGravityForm(variables) {
       }
     `
 
-    const data = await graphQLClient.request(mutation, variables)
+    // let requestHeaders = {
+    //   "Content-Type": "multipart/form-data",
+    // }
+    const data = await graphQLClient.request(
+      mutation,
+      variables
+      // requestHeaders
+    )
     console.log({ data })
 
     //300,000 = 300 seconds in MS; or 5 mins;
@@ -196,15 +199,18 @@ export function useSubmitGravityForm(variables) {
 
       console.log(error)
       console.log(`rolling back optimistic update with id ${context.id}`)
+      return error
     },
     onSuccess: (data, variables, context) => {
       // Boom baby!
 
       console.log(data)
+      return data
     },
     onSettled: (data, error, variables, context) => {
       // Error or success... doesn't matter!
       console.log({ data })
+      return data
     },
   })
 }

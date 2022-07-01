@@ -1,6 +1,6 @@
 import React from "react"
 import { Box } from "../atoms"
-import { cnMap } from "../../utilities/className"
+// import { cnMap } from "../../utilities/className"
 
 export default function HubIllo({
   children,

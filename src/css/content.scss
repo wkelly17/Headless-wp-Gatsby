@@ -1,0 +1,39 @@
+.theContent {
+  > *:first-child {
+    margin-top: 0;
+  }
+  // img {
+  //   opacity: 1 !important;
+  // }
+
+  h2 {
+    @extend .h4;
+  }
+
+  h3 {
+    @extend .h5;
+  }
+
+  h4 {
+    @extend .h6;
+    font-weight: 700;
+  }
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 2rem 0 1rem;
+  }
+
+  table {
+    td {
+      padding: 0.5em 0.5em 0.75em;
+    }
+  }
+
+  // .wp-block-button__link {
+  //   @extend .btn, .btn--pill;
+  // }
+}

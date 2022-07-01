@@ -6,6 +6,7 @@ import ListItem from "./ListItem"
 import Header from "./Header"
 import Text from "./Text"
 import Loader from "./Loader"
+import If from "./If"
 import {
   SVGLinesDoors,
   IlloSputnik,
@@ -15,7 +16,7 @@ import {
   SVGMartini,
   IconCloseSvg,
 } from "./SVG"
-import If from "./If"
+import { IconChevronRight } from "./Icons"
 
 // import List from "./Heading"
 
@@ -36,4 +37,5 @@ export {
   SVGMartini,
   If,
   IconCloseSvg,
+  IconChevronRight,
 }

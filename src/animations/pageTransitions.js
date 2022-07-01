@@ -1,27 +1,24 @@
 import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { SplitText } from "gsap/SplitText"
-import { TextPlugin } from "gsap/TextPlugin"
-import { DrawSVGPlugin } from "gsap/DrawSVGPlugin"
 import { qf, viewPortWidth, querySafe } from "../utilities/gsap"
+import { DOM } from "../constants/constants"
 
 //!================================
 //!=============== EVENTS  =============
 //!=================================
 export function Home2EventsExit({ node, e, exit, entry }, needDur = false) {
   if (!node) return
-
-  let hubScroller = qf(node, "#hub-scroller")
-  let section = qf(node, "#hub-section-3")
-  let sectionBorder = qf(node, "#hub-section-3-border")
-  let img = section.querySelector("img")
-  let header = document.querySelector(".masthead")
+  let hubScroller = DOM.hubScroller.get()
+  let section = DOM.homeHubSection3.get()
+  let sectionBorder = DOM.homeHubSection3Border.get()
+  // let img = (section && section.querySelector("img")) || {}
+  let img = querySafe("img", needDur, section)
+  let header = DOM.masthead.get()
 
   let headerWidth = header.offsetWidth
-  let headerHeight = header.offsetHeight
+  // let headerHeight = header.offsetHeight
 
   let sectionX = (section.offsetLeft - headerWidth) * -1
-  let sectionY = (section.offsetTop - window.pageYOffset) * -1
+  // let sectionY = (section.offsetTop - window.pageYOffset) * -1
 
   let sectionPrev = section.previousElementSibling
   let sectionNext = section.nextElementSibling
@@ -84,8 +81,6 @@ export function Home2EventsExit({ node, e, exit, entry }, needDur = false) {
   }
 }
 export function EventsFromHomeEntry({ node, e, exit, entry }, needDur = false) {
-  const q = gsap.utils.selector(node)
-
   let tl = gsap.timeline({
     paused: true,
   })
@@ -110,22 +105,20 @@ export function Home2VenueExit({ node, e, exit, entry }, needDur = false) {
     paused: true,
   })
 
-  let hubScroller = qf(node, "#hub-scroller")
-  let section = hubScroller.querySelector("#hub-section-2")
-  let sectionCol = section.querySelector("#hub-section-2-col")
-  let sectionBorder = section.querySelector("#hub-section-2-border")
-  let sectionIllo = section.querySelector("#hub-section-2-illo")
-  let sectionPane = section.querySelector("#hub-section2-pane")
-  let sectionLines = section.querySelector("#hub-section-2lines")
+  let hubScroller = DOM.hubScroller.get()
+  let section = DOM.homeHubSection2.get()
+  let sectionBorder = DOM.homeHubSection2Border.get()
+  let sectionPane = DOM.homeHubSection2Pane.get()
+  let sectionLines = DOM.homeHubSection2Lines.get()
+  let header = DOM.masthead.get()
 
-  let header = document.querySelector(".masthead")
   let headerWidth = header.offsetWidth
-  let headerHeight = header.offsetHeight
+  // let headerHeight = header.offsetHeight
 
   let sectionX = (section.offsetLeft - headerWidth) * -1
-  let sectionY = (section.offsetTop - window.pageYOffset) * -1
-  let sectionPrev = section.previousElementSibling
-  let sectionNext = section.nextElementSibling
+  // let sectionY = (section.offsetTop - window.pageYOffset) * -1
+  // let sectionPrev = section.previousElementSibling
+  // let sectionNext = section.nextElementSibling
 
   // ANIM HERE;
   tl.to(sectionPane, {
@@ -210,17 +203,18 @@ export function Home2News(
     paused: true,
   })
 
-  let hubScroller = qf(node, "#hub-scroller")
+  let hubScroller = DOM.hubScroller.get()
+  let section = DOM.homeHubSection4.get()
+  let sectionBtn = DOM.homeHubSection4Btn.get()
+  let sectionBorder = DOM.homeHubSection4Border.get()
 
-  let section = qf(node, "#hub-section-4")
-  let sectionBtn = qf(node, "#hub-section-4-btn")
-  let sectionBorder = qf(node, "#hub-section-4-border")
+  let sectionListItems = [
+    ...(section.querySelectorAll("#hub-section-4-list li") || {}),
+  ]
+  let header = DOM.masthead.get()
 
-  let sectionListItems = [...section.querySelectorAll("#hub-section-4-list li")]
-
-  let header = document.querySelector(".masthead")
   let headerWidth = header.offsetWidth
-  let headerHeight = header.offsetHeight
+  // let headerHeight = header.offsetHeight
   let sectionX = (section.offsetLeft - headerWidth) * -1
   let sectionY = (section.offsetTop - window.pageYOffset) * -1
 
@@ -347,18 +341,18 @@ export function toNewsSingleLeave(
   })
 
   //=============== SELECTORS  =============
-  let hubScroller = qf(node, "#hub-scroller")
+  let hubScroller = DOM.hubScroller.get()
+  let section = DOM.homeHubSection4.get()
 
-  let section = qf(node, "#hub-section-4")
-  let sectionBtn = qf(node, "#hub-section-4-btn")
-  let sectionBorder = qf(node, "#hub-section-4-border")
-  let sectionCol = section.querySelector("#hub-section-4-col")
+  // let sectionBtn = qf(node, "#hub-section-4-btn")
+  let sectionBorder = DOM.homeHubSection4Border.get()
+  let sectionCol = DOM.homeHubSection4Col.get()
 
-  let sectionListItems = [...section.querySelectorAll("#hub-section-4-list li")]
+  // let sectionListItems = [...section.querySelectorAll("#hub-section-4-list li")]
 
-  let header = document.querySelector(".masthead")
+  let header = DOM.masthead.get()
   let headerWidth = header.offsetWidth
-  let headerHeight = header.offsetHeight
+  // let headerHeight = header.offsetHeight
   let sectionX = (section.offsetLeft - headerWidth) * -1
   let sectionY = (section.offsetTop - window.pageYOffset) * -1
 
@@ -453,9 +447,8 @@ export function ExitFromNewsArchiveToSingle(
 
   //=============== SELECTORS  =============
   let mainInner = querySafe("#news-inner", needDur)
-  let footer = querySafe("#colophon", needDur)
-
   // todo: put footer back in;
+  let footer = querySafe("#colophon", needDur)
 
   //=============== ANIMATIONS  =============
   tl.to([mainInner], {
@@ -512,9 +505,8 @@ export function ExitToHomeFromMastheadLogo(
 
   //=============== SELECTORS  =============
   let main = querySafe("main")
-  let footer = querySafe("#colophon")
-
   // todo: put footer back in
+  let footer = querySafe("#colophon")
 
   //=============== ANIMATIONS  =============
 
@@ -574,7 +566,7 @@ export function toHomeEnter(
 
 export function initialPageAnimation() {
   console.log(window.location)
-  let path = window.location.pathname
+  // let path = window.location.pathname
 
   // if (path == "/news") {
   //   console.log("news initial")

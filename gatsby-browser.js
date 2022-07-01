@@ -1,16 +1,14 @@
-import React, { useEffect, useState, Fragment } from "react"
-import { Link } from "gatsby"
+import React from "react"
 import { QueryClient, QueryClientProvider } from "react-query"
-import { ReactQueryDevtools } from "react-query/devtools"
+// import { ReactQueryDevtools } from "react-query/devtools"
 import "./src/css/global.css"
 import "./src/css/style.scss"
 import { ResponsiveProvider } from "./src/context/ResponsiveContext"
 import { AnimationProvider } from "./src/context/AnimationContext"
 import { gsap } from "gsap"
 import { Box } from "./src/components/atoms"
-import { Masthead, Search } from "./src/components/organisms"
-import { useKey } from "react-use"
-import { Dialog, Transition } from "@headlessui/react"
+import { Masthead } from "./src/components/organisms"
+import { Layout } from "./src/components/common"
 
 const queryClient = new QueryClient()
 gsap.config({
@@ -40,32 +38,11 @@ export const wrapPageElement = ({ element, props }) => {
       <Masthead />
       <Box
         className={`${debugCn(true)} ${
-          props.path != "/" && "pageWrapperInner-notHome"
+          props.path !== "/" && "pageWrapperInner-notHome"
         }`}
       >
-        <WrappedRootInComponent element={element} />
+        <Layout element={element} />
       </Box>
     </Box>
-  )
-}
-
-function WrappedRootInComponent({ element }) {
-  let [openSearchDialog, setOpenSearchDialog] = useState(false)
-  useKey("k", (event) => {
-    if (event.metaKey) {
-      console.log("you pressed command K!")
-      setOpenSearchDialog(true)
-    }
-  })
-  console.log("WRAPPING ROOT ELEMENT")
-  return (
-    <>
-      {element}
-
-      <Search
-        openSearchDialog={openSearchDialog}
-        setOpenSearchDialog={setOpenSearchDialog}
-      />
-    </>
   )
 }

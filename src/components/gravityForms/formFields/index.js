@@ -10,6 +10,8 @@ import RadioField from "./RadioField"
 import TimeField from "./TimeField"
 import PhoneField from "./PhoneField"
 import WebsiteField from "./WebsiteField"
+import FileField from "./FileField"
+import DateField from "./DateField"
 
 export {
   TextField,
@@ -24,4 +26,6 @@ export {
   TimeField,
   PhoneField,
   WebsiteField,
+  FileField,
+  DateField,
 }

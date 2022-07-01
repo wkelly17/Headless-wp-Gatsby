@@ -14,7 +14,7 @@ export default function Head({ title, description, image }) {
         <meta
           name="description"
           property="og:description"
-          content={description}
+          content={"findme!!!!"}
         />
       )}
       <meta property="og:title" content={title} />

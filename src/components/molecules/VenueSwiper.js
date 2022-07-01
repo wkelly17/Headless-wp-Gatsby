@@ -1,12 +1,11 @@
 import * as React from "react"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-import { Box, Heading, Header } from "../atoms"
+
 import { Swiper, SwiperSlide } from "swiper/react"
 import { EffectFade, Autoplay } from "swiper"
 import "swiper/css"
 import "swiper/css/effect-fade"
 import "swiper/css/autoplay"
-// import "swiper/css/bundle"
 
 export default function VenueSwiper({ detailsGallery1, config }) {
   if (!detailsGallery1) return

@@ -18,8 +18,15 @@ export function FallbackNodeForDurIfNeeded(arr, fallback) {
     })
   }
 }
-export function querySafe(sel, isForDuration) {
-  let node = document.querySelector(sel) || {}
+export function querySafe(sel, isForDuration, scopedNode) {
+  let node
+  if (scopedNode) {
+    if (!Object.keys(scopedNode).length) {
+      return {}
+    } else return scopedNode.querySelector(sel)
+  } else {
+    node = document.querySelector(sel) || {}
+  }
   debugQueriesIfNeeded(sel, isForDuration)
   return node
 }

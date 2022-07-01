@@ -28,7 +28,6 @@ Page Transitions file for those specifically
 
 - In this repo: mostly done through tailwind
 - Base styles for things like List unstyled etc; can be written into the atoms/components itself OR left in a base sass file
--
 
 ## Extra nice=ities
 

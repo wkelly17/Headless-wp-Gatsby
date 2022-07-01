@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, List, ListItem } from "../atoms"
+import { List, ListItem } from "../atoms"
 import { Link } from "gatsby"
 
 export default function Nav({ children, className }) {
