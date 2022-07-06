@@ -6,6 +6,8 @@ import EventsCalItems from "./EventsCalMarkup"
 import VenueSwiper from "./VenueSwiper"
 import Sidebar from "./Sidebar"
 import LightBox from "./LightBox"
+import SocialList from "./Social"
+import ContactInfo from "./ContactInfo"
 
 export {
   HubPane,
@@ -16,4 +18,6 @@ export {
   VenueSwiper,
   Sidebar,
   LightBox,
+  SocialList,
+  ContactInfo,
 }

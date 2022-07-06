@@ -1,4 +1,4 @@
-import React, { useState, useMemo, Fragment } from "react"
+import React, { useState, Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { Document as flexDocument } from "flexsearch"
 import { encode as advancedEncode } from "flexsearch/dist/module/lang/latin/advanced.js"
@@ -9,43 +9,16 @@ export default function Search({ openSearchDialog, setOpenSearchDialog }) {
   const data = useStaticQuery(queryString)
   const [searchTerm, setSearchTerm] = useState("")
   const [state, setState] = useState("")
-  // const [val, setVal] = useState("")
-  const { index, store } = data.allLocalSearchWpSearch.nodes[0]
-  const id = useMemo(() => {
-    let idx = new flexDocument({
-      id: "id",
-      preset: "score",
-      tokenize: "forward",
-      cache: 100,
-      charset: "latin:extra",
-      encode: advancedEncode,
-      document: {
-        id: "id",
-        index: [
-          {
-            field: "title",
-            resolution: 9,
-          },
-          {
-            field: "content",
-            resolution: 9,
-          },
-        ],
-      },
-    })
-    Object.entries(store).forEach((kv, i) => {
-      let [key, value] = kv
-      idx.add({ id: key, ...value })
-    })
-    return idx
-  }, [index, store])
-
+  const [searchIndex, setSearchIndex] = useState(null)
+  const [publicStore, setPublicStore] = useState(null)
   let [results, setResults] = React.useState(null)
 
+  // first (skipped) is fxn returning current debounce state;
   const [, cancel] = useDebounce(
     () => {
       setState("Typing stopped")
-      let results = id.search(searchTerm, {
+      if (!searchIndex) return
+      let results = searchIndex.search(searchTerm, {
         index: ["title", "content"],
         suggest: true,
         limit: 10,
@@ -53,7 +26,7 @@ export default function Search({ openSearchDialog, setOpenSearchDialog }) {
       let final = results
         .map((index) => {
           return index.result.map((id) => {
-            return store[id]
+            return publicStore[id]
           })
         })
         .flat()
@@ -63,6 +36,51 @@ export default function Search({ openSearchDialog, setOpenSearchDialog }) {
     200,
     [searchTerm]
   )
+
+  const getSearchData = React.useCallback(() => {
+    if (searchIndex && publicStore) return
+    async function getSearchItems() {
+      // let publicIndex = data.
+      const { publicIndexURL, publicStoreURL } =
+        data.allLocalSearchWpSearch?.nodes[0]
+      let response = await fetch(publicIndexURL)
+      let publicStoreResponse = await fetch(publicStoreURL)
+      let searchData = await response.json()
+      let publicStoreData = await publicStoreResponse.json()
+      console.log(searchData)
+      console.log(publicStoreData)
+
+      const searchIdx = flexDocument({
+        id: "id",
+        preset: "score",
+        tokenize: "forward",
+        cache: 100,
+        charset: "latin:extra",
+        encode: advancedEncode,
+        document: {
+          id: "id",
+          index: [
+            {
+              field: "title",
+              resolution: 9,
+            },
+            {
+              field: "content",
+              resolution: 9,
+            },
+          ],
+        },
+      })
+      Object.entries(publicStoreData).forEach((kv, i) => {
+        let [key, value] = kv
+        searchIdx.add({ id: key, ...value })
+      })
+
+      setSearchIndex(searchIdx)
+      setPublicStore(publicStoreData)
+    }
+    getSearchItems()
+  }, [data.allLocalSearchWpSearch?.nodes, publicStore, searchIndex])
 
   return (
     <Transition show={openSearchDialog}>
@@ -102,6 +120,9 @@ export default function Search({ openSearchDialog, setOpenSearchDialog }) {
                       setState("Waiting for typing to stop...")
                       setSearchTerm(currentTarget.value)
                     }}
+                    onFocus={(params) => {
+                      getSearchData()
+                    }}
                   />
                 </label>
 
@@ -135,6 +156,8 @@ const queryString = graphql`
   {
     allLocalSearchWpSearch {
       nodes {
+        publicIndexURL
+        publicStoreURL
         index
         store
       }

@@ -1,13 +1,17 @@
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SplitText } from "gsap/SplitText"
+import { TextPlugin } from "gsap/TextPlugin"
+
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin"
 
 import { querySafe, viewPortWidth } from "../utilities/gsap"
+import { DOM } from "../constants/constants"
 
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(SplitText)
 gsap.registerPlugin(DrawSVGPlugin)
+gsap.registerPlugin(TextPlugin)
 
 export function NewsletterSuccessFxn(
   hookFormReset,
@@ -40,10 +44,9 @@ export function illoSputnikAnimate(ref, isDesktop, sideScroller) {
     gsap.to(ref.current, {
       rotate: 180,
       scrollTrigger: {
-        containerAnimation: sideScroller,
-        trigger: "#hub-section-2",
-        start: "right-=10% right-=10%",
-        end: "right 10%",
+        trigger: DOM.homeHubSection2.get(),
+        start: "top 75%",
+        end: "bottom top",
         scrub: 1,
         toggleActions: "play pause resume pause",
       },
@@ -453,4 +456,35 @@ export function tlVenueMartini() {
       { duration: 3.3, drawSVG: "100% 100%", ease: "none" },
       "<"
     )
+}
+
+export function accordionHeight(ref, dur) {
+  // if (!ref.current) return
+  let tl = gsap.timeline({
+    paused: true,
+  })
+  let tween = tl.to(ref.current, {
+    height: ref.current?.scrollHeight,
+    duration: dur,
+  })
+  tl.add(tween)
+  return tl
+}
+
+export function mastheadToggleText(node) {
+  // if (!ref.current) return
+
+  let tl = gsap.timeline({
+    paused: true,
+    // onStart: () => {
+    //   debugger
+    // },
+  })
+  tl.to(node, {
+    duration: 0.4,
+    text: "Back",
+    ease: "none",
+  })
+
+  return tl
 }

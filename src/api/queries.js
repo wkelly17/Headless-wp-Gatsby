@@ -4,87 +4,87 @@ const API_URL = "http://localhost:8888/WpeAtlasTestBackend/graphql"
 console.log(API_URL)
 const graphQLClient = new GraphQLClient(API_URL)
 
-export function useGetPosts() {
-  let queryFn = async () => {
-    let query2 = gql`
-      {
-        posts {
-          nodes {
-            content
-            title
-          }
-        }
-      }
-    `
-    const data = await graphQLClient.request(query2)
-    return data.posts.nodes
-  }
+// export function useGetPosts() {
+//   let queryFn = async () => {
+//     let query2 = gql`
+//       {
+//         posts {
+//           nodes {
+//             content
+//             title
+//           }
+//         }
+//       }
+//     `
+//     const data = await graphQLClient.request(query2)
+//     return data.posts.nodes
+//   }
 
-  return useQuery("get-posts", queryFn)
-}
+//   return useQuery("get-posts", queryFn)
+// }
 
-export function useLogin() {
-  let storedLogin
-  if (localStorage.getItem("jwt")) {
-    storedLogin = JSON.parse(localStorage.getItem("jwt"))
-  }
-  // const [login, setLogin, removeLogin] = useLocalStorage("jwt", "")
+// export function useLogin() {
+//   let storedLogin
+//   if (localStorage.getItem("jwt")) {
+//     storedLogin = JSON.parse(localStorage.getItem("jwt"))
+//   }
+//   // const [login, setLogin, removeLogin] = useLocalStorage("jwt", "")
 
-  let queryFn = async () => {
-    console.log("trying login")
-    let mutation = gql`
-      mutation {
-        login(input: { password: "pass", username: "bpwpeatlastes1" }) {
-          clientMutationId
-          authToken
-          refreshToken
-          user {
-            name
-          }
-        }
-      }
-    `
-    const data = await graphQLClient.request(mutation)
+//   let queryFn = async () => {
+//     console.log("trying login")
+//     let mutation = gql`
+//       mutation {
+//         login(input: { password: "pass", username: "bpwpeatlastes1" }) {
+//           clientMutationId
+//           authToken
+//           refreshToken
+//           user {
+//             name
+//           }
+//         }
+//       }
+//     `
+//     const data = await graphQLClient.request(mutation)
 
-    console.log({ data })
-    // let { authToken, refreshToken } = data.login
-    //300,000 = 300 seconds in MS; or 5 mins;
-    // if (data.login) {
-    //   setLogin({
-    //     authToken,
-    //     refreshToken,
-    //     expires: 300000,
-    //     current: Date.now(),
-    //   })
-    // }
-    return data
-  }
+//     console.log({ data })
+//     // let { authToken, refreshToken } = data.login
+//     //300,000 = 300 seconds in MS; or 5 mins;
+//     // if (data.login) {
+//     //   setLogin({
+//     //     authToken,
+//     //     refreshToken,
+//     //     expires: 300000,
+//     //     current: Date.now(),
+//     //   })
+//     // }
+//     return data
+//   }
 
-  return useMutation(queryFn, {
-    mutationKey: "login",
-    onMutate: (variables) => {
-      // A mutation is about to happen!
+//   return useMutation(queryFn, {
+//     mutationKey: "login",
+//     onMutate: (variables) => {
+//       // A mutation is about to happen!
 
-      // Optionally return a context containing data to use when for example rolling back
-      return variables
-    },
-    onError: (error, variables, context) => {
-      // An error happened!
+//       // Optionally return a context containing data to use when for example rolling back
+//       return variables
+//     },
+//     onError: (error, variables, context) => {
+//       // An error happened!
 
-      console.log(error)
-      console.log(`rolling back optimistic update with id ${context.id}`)
-    },
-    onSuccess: (data, variables, context) => {
-      // Boom baby!
+//       console.log(error)
+//       console.log(`rolling back optimistic update with id ${context.id}`)
+//     },
+//     onSuccess: (data, variables, context) => {
+//       // Boom baby!
 
-      console.log(data)
-    },
-    onSettled: (data, error, variables, context) => {
-      // Error or success... doesn't matter!
-      console.log({ data })
-    },
-  })
-}
+//       console.log(data)
+//     },
+//     onSettled: (data, error, variables, context) => {
+//       // Error or success... doesn't matter!
+//       console.log({ data })
+//     },
+//   })
+// }
 
 export function useGravityForm(id) {
   let queryFn = async () => {

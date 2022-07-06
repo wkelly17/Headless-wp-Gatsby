@@ -1,4 +1,4 @@
-import { querySafe, querySafeAll } from "../utilities/gsap"
+import { querySafe } from "../utilities/gsap"
 
 const DOM = {
   hubScroller: {
@@ -61,12 +61,6 @@ const DOM = {
       return querySafe("#hub-section-3-border")
     },
   },
-  homeHubSection3: {
-    id: "hub-section-3",
-    get: () => {
-      return querySafe("#hub-section-3")
-    },
-  },
   homeHubSection3Split: {
     id: "hubSplitEvent",
     get: () => {
@@ -127,6 +121,31 @@ const DOM = {
       return querySafe("#masthead")
     },
   },
+  drawer: {
+    id: "drawer",
+    get: () => {
+      return querySafe("#drawer")
+    },
+  },
+  drawerOutter: {
+    id: "drawerOutter",
+    get: () => {
+      return querySafe("#drawerOutter")
+    },
+  },
+  drawerInner: {
+    id: "drawerInner",
+    get: () => {
+      return querySafe("#drawerInner")
+    },
+  },
+  navToggle: {
+    id: "navToggle",
+    get: () => {
+      return querySafe("#navToggle")
+    },
+  },
+
   venue: {
     id: "venue",
     get: () => {
@@ -191,6 +210,30 @@ const DOM = {
     id: "events-splitHeader",
     get: () => {
       return querySafe("#events-splitHeader")
+    },
+  },
+  lightbox: {
+    id: "lightbox",
+    get: () => {
+      return querySafe("#lightbox")
+    },
+  },
+  news: {
+    id: "news",
+    get: () => {
+      return querySafe("#news")
+    },
+  },
+  newsPag: {
+    id: "news-pag",
+    get: () => {
+      return querySafe("#news-pag")
+    },
+  },
+  contactPage: {
+    id: "contact",
+    get: () => {
+      return querySafe("#contact")
     },
   },
 }

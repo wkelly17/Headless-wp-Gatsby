@@ -80,9 +80,6 @@ function BlogIndex(props) {
         >
           <Header className="pb-8 tp:pb-12">
             <Heading className="h3"> News </Heading>
-            {/* <If data={false} fallback={<p>Fallback! </p>}>
-              I show up!
-            </If> */}
           </Header>
           <Box>
             <List className="d:h-[698px] tp:flex tp:flex-wrap d:flex-col ">

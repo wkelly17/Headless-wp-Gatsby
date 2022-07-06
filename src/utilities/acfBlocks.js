@@ -31,13 +31,9 @@ export const replaceOptions = {
       )
     }
     //=============== ACCORDION END===========
-    // else if (domNode.attribs?.decoding && domNode.attribs?.["data-srcset"]) {
-    //   // domNode.classList.add("!opacity-100")
-    //   return domToReact(domNode.children, replaceOptions)
-    // }
+    else if (domNode.attribs?.decoding && domNode.attribs?.["data-srcset"]) {
+      // domNode.classList.add("!opacity-100")
+      return domToReact(domNode.children, replaceOptions)
+    }
   },
-}
-
-export function checkForCustomAccordion(domNode, options) {
-  debugger
 }

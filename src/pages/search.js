@@ -1,8 +1,5 @@
 import React from "react"
-import { Document as flexDocument } from "flexsearch"
-import { useFlexSearch } from "react-use-flexsearch"
 import { graphql } from "gatsby"
-import { set } from "react-hook-form"
 import GravityForm from "../components/gravityForms/GravityForm"
 
 function SearchPage(props) {

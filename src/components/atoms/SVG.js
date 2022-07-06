@@ -220,7 +220,7 @@ export function IlloSputnik({ homepageAnimate, sideScroller, className = "" }) {
   let ref = React.useRef()
 
   React.useEffect(() => {
-    if (isDesktop && homepageAnimate) {
+    if (homepageAnimate) {
       illoSputnikAnimate(ref, isDesktop, sideScroller)
     } else {
       console.log("moble")
@@ -250,7 +250,7 @@ export function LinesRecords({ sideScroller, homePageAnim, className }) {
       let ref = document.querySelector("#hubLinesRecords .lines--record")
       linesRecord(ref, isDesktop, sideScroller)
     }
-  }, [sideScroller, isDesktop])
+  }, [sideScroller, isDesktop, homePageAnim])
   return (
     <svg
       className={`lines lines--record ${className}`}
@@ -939,15 +939,6 @@ export function SVGMartini() {
           points="419.62 601.38 419.62 380.15 801.55 -3.46"
         />
       </g>
-    </svg>
-  )
-}
-
-export function IconCloseSvg({ className = "" }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24">
-      <path d="M0 0h24v24H0z" fill="none" />
-      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
     </svg>
   )
 }

@@ -46,7 +46,6 @@ export default function GravityForm({
     console.log({ data })
 
     let result = Object.entries(data)
-    debugger
     let nonFileLists = []
     let fileLists = []
     result.forEach((tuple) => {
@@ -60,9 +59,10 @@ export default function GravityForm({
     let formVals = nonFileLists.map((input, idx) => {
       return reshapeDataForSubmit(input, idx, fieldTypeMap)
     })
-    let fileVals = fileLists.map((input, idx) => {
-      return reshapeDataForSubmit(input, idx, fieldTypeMap)
-    })
+
+    // let fileVals = fileLists.map((input, idx) => {
+    //   return reshapeDataForSubmit(input, idx, fieldTypeMap)
+    // })
     let response = await mutation.mutateAsync({
       id: formId,
       fieldValues: formVals,
@@ -85,7 +85,7 @@ export default function GravityForm({
       className={`gform ${formClassName} `}
       id={`gform-${formId}`}
     >
-      <div className="formInnerWrapper dmax:h-24">
+      <div className="formInnerWrapper d:h-full">
         {/* register your input into the hook by invoking the "register" function */}
 
         {fields.length &&
@@ -148,7 +148,7 @@ export default function GravityForm({
           })}
       </div>
       <div className={`formFooter ${footerClassName}`}>
-        <input type="submit" className="dmax:h-full" />
+        <input type="submit" className="overflow-hidden dmax:h-full" />
       </div>
     </form>
   )

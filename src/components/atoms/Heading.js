@@ -20,8 +20,11 @@ const Heading = forwardRef(
     React.useEffect(() => {
       if (!split) return
       let node = split.getter()
+      if (node.firstChild?.classList?.contains("split__word")) {
+        return
+      }
       split.fxn(node)
-    }, [])
+    }, [split])
 
     if (wrapInHeader) {
       return (

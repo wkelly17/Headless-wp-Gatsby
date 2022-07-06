@@ -1,5 +1,5 @@
 import React from "react"
-import Select, { components } from "react-select"
+import Select from "react-select" //can destructure out components to write custom components if desired
 
 // export default function SelectField({ register, field, errors }) {
 //   let id = String(field.id)

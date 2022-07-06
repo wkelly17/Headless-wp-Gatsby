@@ -7,9 +7,17 @@ import {
   EventsFromHomeEntry,
   Home2News,
   NewsFromHomeEnter,
+  toNavLeave,
+  toNavEnter,
+  genericLeave,
+  genericEnter,
 } from "./pageTransitions"
 
-export function getTransLinkProps(key, transitionDurations) {
+export function getTransLinkProps(
+  key,
+  transitionDurations,
+  { toggleIsOpen: closeNavStateSetter } = {}
+) {
   if (!transitionDurations) return
 
   // let exit, trigger, length, play = true, delay
@@ -84,7 +92,7 @@ export function getTransLinkProps(key, transitionDurations) {
         play: true,
       },
     }
-  } else if (key == "home2Events") {
+  } else if (key === "home2Events") {
     return {
       exit: {
         trigger: ({ node, e, exit, entry }) =>
@@ -100,7 +108,7 @@ export function getTransLinkProps(key, transitionDurations) {
         play: true,
       },
     }
-  } else if ((key = "home2News")) {
+  } else if (key === "home2News") {
     return {
       exit: {
         trigger: ({ node, e, exit, entry }) =>
@@ -115,6 +123,42 @@ export function getTransLinkProps(key, transitionDurations) {
         trigger: ({ node, e, exit, entry }) =>
           NewsFromHomeEnter({ node, e, exit, entry }),
         delay: transitionDurations?.toNews - 0.1,
+        play: true,
+      },
+    }
+  } else if (key === "mastheadNavLink") {
+    return {
+      exit: {
+        trigger: ({ node, e, exit, entry }) =>
+          toNavLeave({ node, e, exit, entry, closeNavStateSetter }),
+        length: transitionDurations?.leaveFromNav,
+        play: true,
+        state: {
+          transLink: true,
+        },
+      },
+      entry: {
+        trigger: ({ node, e, exit, entry }) =>
+          toNavEnter({ node, e, exit, entry }),
+        delay: transitionDurations?.leaveFromNav - 0.1,
+        play: true,
+      },
+    }
+  } else if (key === "genericTransLink") {
+    return {
+      exit: {
+        trigger: ({ node, e, exit, entry }) =>
+          genericLeave({ node, e, exit, entry }),
+        length: transitionDurations?.genericLeave,
+        play: true,
+        state: {
+          transLink: true,
+        },
+      },
+      entry: {
+        trigger: ({ node, e, exit, entry }) =>
+          genericEnter({ node, e, exit, entry }),
+        delay: transitionDurations?.genericLeave - 0.1,
         play: true,
       },
     }

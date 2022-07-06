@@ -3,13 +3,8 @@ import {
   ExitFromNewsArchiveToSingle,
   initialPageAnimation,
   ExitToHomeFromMastheadLogo,
-  Home2EventsExit,
-  EventsFromHomeEntry,
-  Home2VenueExit,
-  toVenueEnter,
-  Home2News,
-  NewsFromHomeEnter,
-  toNewsSingleLeave,
+  toNavLeave,
+  genericLeave,
 } from "../animations/pageTransitions"
 
 const AnimationContext = createContext()
@@ -33,10 +28,11 @@ const AnimationProvider = ({ children }) => {
         { node: placeholderNode },
         true
       ),
+      leaveFromNav: toNavLeave({ node: placeholderNode }, true),
+      genericLeave: genericLeave({ node: placeholderNode }, true),
     }
 
     setTransitionDurations(durations)
-    console.log({ transitionDurations })
     initialPageAnimation()
   }, [])
 

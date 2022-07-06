@@ -1,9 +1,9 @@
-import React, { Fragment } from "react"
-import { Dialog, Transition } from "@headlessui/react"
-import { Swiper, SwiperSlide, useSwiperSlide } from "swiper/react"
+import React from "react"
+import { Dialog } from "@headlessui/react"
+import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation, Pagination } from "swiper"
 
-import { Box, Text, Button, IconCloseSvg } from "../atoms"
+import { Box, Button, IconCloseSvg } from "../atoms"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { useKey } from "react-use"
 

@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 /* = !PRACTICAL TYPOGRAPHY
 
 // The four most important typographic choices you make in any
@@ -33,6 +36,14 @@
 
   --weightNormal: theme(fontWeight.normal);
   --weightBold: theme(fontWeight.bold);
+}
+@layer utilities {
+  .text-shadow {
+    text-shadow: 3px 3px 0 var(--grayDarker);
+  }
+  .text-shadow-none {
+    text-shadow: none;
+  }
 }
 
 html {

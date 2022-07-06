@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import DatePicker from "react-datepicker"
 
 import "react-datepicker/dist/react-datepicker.css"
@@ -12,15 +12,13 @@ export default function DateField({
 }) {
   // debugger
   let {
-    dateFormat,
-    dateType,
-    defaultValue,
+    // dateFormat,
+    // dateType,
+    // defaultValue,
     id,
-    isRequired,
     label,
-    placeholder,
+    // placeholder,
   } = formField
-  const [startDate, setStartDate] = useState(new Date())
 
   return (
     <>

@@ -1,16 +1,19 @@
 import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
-import { Box, List, Heading, ListItem } from "../atoms"
-import { Link } from "gatsby"
+import { List, ListItem } from "../atoms"
+
+import TransitionLink from "gatsby-plugin-transition-link"
+import { getTransLinkProps } from "../../animations/transitionLinkProps"
+import { AnimationContext } from "../../context/AnimationContext"
 
 const Sidebar = ({ parent, ownChildren, siblings, nodeType }) => {
-  const data = useStaticQuery(queryString)
+  // const data = useStaticQuery(queryString)
+  let { transitionDurations } = React.useContext(AnimationContext)
 
-  function highlightActiveLink(item) {
-    return window.location.pathname == item.uri ? "text-grayDark" : ""
+  function highlightActiveTransitionLink(item) {
+    return window.location.pathname === item.uri ? "text-grayDark" : ""
   }
   function determineAria(item) {
-    return window.location.pathname == item.uri
+    return window.location.pathname === item.uri
       ? {
           ariaCurrent: "page",
         }
@@ -28,39 +31,21 @@ const Sidebar = ({ parent, ownChildren, siblings, nodeType }) => {
       {items.map((item, idx) => {
         return (
           <ListItem className="mb-2 last:mb-0 ">
-            <Link
+            <TransitionLink
               to={item.uri}
-              className={`text-grayDarker ${highlightActiveLink(
+              className={`text-grayDarker ${highlightActiveTransitionLink(
                 item
               )} hover:text-primary focus:text-primary`}
               {...determineAria(item)}
+              {...getTransLinkProps("genericTransLink", transitionDurations)}
             >
               {item.title}
-            </Link>
+            </TransitionLink>
           </ListItem>
         )
       })}
     </List>
   )
 }
-
-const queryString = graphql`
-  {
-    allWpContentNode(filter: { nodeType: { nin: ["MediaItem", "Example"] } }) {
-      nodes {
-        nodeType
-        link
-        ... on WpPage {
-          id
-          title
-        }
-        ... on WpPost {
-          id
-          title
-        }
-      }
-    }
-  }
-`
 
 export default Sidebar

@@ -14,7 +14,7 @@ import {
   FileField,
   DateField,
 } from "../components/gravityForms/formFields"
-import { v4 as uuidv4 } from "uuid"
+
 import { format } from "date-fns"
 
 export function assignFields(type) {
@@ -205,8 +205,6 @@ export function reshapeDataForSubmit(input, idx, fieldTypeMap) {
 
     case "FILEUPLOAD":
       let filesArr = [...vals].map((val) => {
-        let tmpName = val.name.replaceAll(" ", "-")
-        let type = val.type.split("/")[1]
         let file = {
           name: val.name,
           type: val.type,

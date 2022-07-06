@@ -11,13 +11,18 @@ export function viewPortWidth() {
     (window.innerWidth - document.documentElement.clientWidth)
   )
 }
-export function FallbackNodeForDurIfNeeded(arr, fallback) {
-  if (!arr.filter((i) => !!i).length) {
-    arr.forEach((node) => {
-      return (node = fallback)
-    })
-  }
+export function fallbackNodesForDuration(arr) {
+  return arr.forEach((obj) => {
+    if (!obj) {
+      obj = {}
+    }
+    if (!Object.keys(obj).length) {
+      let node = document.querySelector("*")
+      Object.assign(obj, node)
+    }
+  })
 }
+
 export function querySafe(sel, isForDuration, scopedNode) {
   let node
   if (scopedNode) {
@@ -25,7 +30,11 @@ export function querySafe(sel, isForDuration, scopedNode) {
       return {}
     } else return scopedNode.querySelector(sel)
   } else {
-    node = document.querySelector(sel) || {}
+    if (isForDuration) {
+      node = document.querySelector("*") //The first selector of anything that matches if fine for duration;
+    } else {
+      node = document.querySelector(sel) || {}
+    }
   }
   debugQueriesIfNeeded(sel, isForDuration)
   return node

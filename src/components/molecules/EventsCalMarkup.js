@@ -76,30 +76,30 @@ function getReadableDate(dateTime) {
   }
   return new Intl.DateTimeFormat("en-US", options).format(date)
 }
-function getBiggest16x9(array) {
-  let whichImages
-  let hasCustom = array.filter((img) => {
-    return img.url.includes("dbimages")
-  })
-  if (hasCustom.length >= 2) {
-    whichImages = hasCustom
-  } else {
-    whichImages = array.filter((image) => !image.url.includes("dbimages"))
-  }
+// function getBiggest16x9(array) {
+//   let whichImages
+//   let hasCustom = array.filter((img) => {
+//     return img.url.includes("dbimages")
+//   })
+//   if (hasCustom.length >= 2) {
+//     whichImages = hasCustom
+//   } else {
+//     whichImages = array.filter((image) => !image.url.includes("dbimages"))
+//   }
 
-  let aspect16 = whichImages.filter((img) => {
-    return img.ratio === "16_9"
-  })
-  aspect16.sort((a, b) => {
-    return b.width - a.width
-  })
+//   let aspect16 = whichImages.filter((img) => {
+//     return img.ratio === "16_9"
+//   })
+//   aspect16.sort((a, b) => {
+//     return b.width - a.width
+//   })
 
-  if (aspect16.length) {
-    return aspect16[1]?.url || aspect16[0].url || null
-  } else {
-    return null
-  }
-}
+//   if (aspect16.length) {
+//     return aspect16[1]?.url || aspect16[0].url || null
+//   } else {
+//     return null
+//   }
+// }
 function getSmallest16x9({ images, name }) {
   let whichImages
   let hasCustom = images.filter((img) => {

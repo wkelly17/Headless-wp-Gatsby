@@ -14,9 +14,14 @@ import {
   IlloToothPickSvg,
   LinesSteroSvg,
   SVGMartini,
-  IconCloseSvg,
 } from "./SVG"
-import { IconChevronRight } from "./Icons"
+import {
+  IconChevronRight,
+  IconFacebook,
+  IconTwitter,
+  IconInstagram,
+  IconCloseSvg,
+} from "./Icons"
 
 // import List from "./Heading"
 
@@ -38,4 +43,7 @@ export {
   If,
   IconCloseSvg,
   IconChevronRight,
+  IconFacebook,
+  IconTwitter,
+  IconInstagram,
 }

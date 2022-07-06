@@ -1,6 +1,7 @@
 import React from "react"
 import { List, ListItem } from "../atoms"
-import { Link } from "gatsby"
+import TransitionLink from "gatsby-plugin-transition-link"
+// import { getTransLinkProps } from "../../animations/transitionLinkProps"
 
 export default function Nav({ children, className }) {
   return <nav className={className}>{children}</nav>
@@ -16,11 +17,13 @@ Nav.Recursive = function RecursiveList({
   topLevelListItemClassNames = "",
   listItemClassNames = "",
   subNavClasses = "",
+  exit,
+  entry,
+  onTransitionLinkClick,
   ...restProps
 }) {
   const Component = as
   //start on firs pass; no recursion
-
   function recurseIn(item) {
     if (item.children.length) {
       counter++
@@ -30,8 +33,14 @@ Nav.Recursive = function RecursiveList({
           counter={counter}
           depth={depth}
           className={subNavClasses}
-          // className={""}
           listItemClassNames={""}
+          exit={exit}
+          entry={entry}
+          as={as}
+          onTransitionLinkClick={onTransitionLinkClick}
+          {...restProps}
+
+          // className={""}
         />
       )
     }
@@ -50,15 +59,24 @@ Nav.Recursive = function RecursiveList({
       .join(" ")
   }
 
+  console.log("TRANSITION PROPS!!!!!!!!")
+  console.log({ exit, entry })
+
   return (
     <Component className={`${navPrefix} ${className ?? ""}`} {...restProps}>
       <List className={`${navPrefix}__list`}>
         {items.map((item, idx) => {
           return (
             <ListItem key={item.id} className={liClassName(item)}>
-              <Link to={item.uri} className={`${navPrefix}__list__item__link `}>
+              <TransitionLink
+                exit={exit}
+                entry={entry}
+                to={item.uri}
+                onClick={onTransitionLinkClick}
+                className={`${navPrefix}__list__item__link `}
+              >
                 <span>{item.label}</span>
-              </Link>
+              </TransitionLink>
               {counter < depth && recurseIn(item)}
             </ListItem>
           )

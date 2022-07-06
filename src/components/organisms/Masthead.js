@@ -7,10 +7,16 @@ import { StaticImage } from "gatsby-plugin-image"
 import { Dialog } from "@headlessui/react"
 import { gsap } from "gsap"
 import { useToggle } from "react-use"
-import { LinesRecordsNav, mastHeadToggle } from "../../animations/interactions"
+import {
+  LinesRecordsNav,
+  mastHeadToggle,
+  mastheadToggleText,
+} from "../../animations/interactions"
 import { getTransLinkProps } from "../../animations/transitionLinkProps"
 import { AnimationContext } from "../../context/AnimationContext"
 import { useDomLoadedEffect } from "../../hooks/useDomLoadedEffect"
+import { DOM } from "../../constants/constants"
+import { useUnmount } from "react-use"
 
 // import { Menu } from "@headlessui/react"
 
@@ -28,6 +34,7 @@ export default function Masthead(props) {
     timeline: gsap.timeline(),
   })
   let recordTl = useRef()
+  let mastheadToggleTextTl = useRef(null)
   // const spin = React.useCallback(() => {}, [] )
   const data = useStaticQuery(queryString)
   const { wpMenu: flatMenu } = data
@@ -53,6 +60,22 @@ export default function Masthead(props) {
       return obj
     }
   }
+  function navTransLinkProps() {
+    let obj = getTransLinkProps("mastheadNavLink", transitionDurations, {
+      toggleIsOpen,
+    })
+    return obj
+  }
+
+  React.useEffect(() => {
+    let button = DOM.navToggle.get()
+    if (!button || !Object.keys(button).length) {
+      return
+    }
+    let span = button.querySelector("span")
+    let tl = mastheadToggleText(span)
+    mastheadToggleTextTl.current = tl
+  }, [])
 
   // todo: skip links
   return (
@@ -77,21 +100,21 @@ export default function Masthead(props) {
           </TransitionLink>
           <Button
             aria-expanded={false}
-            id="navToggle"
+            id={DOM.navToggle.id}
             className="block w-full d:shadow-borderTopBg d:h-full masthead__toggle"
             onClick={(event) => {
               // leaving it rendered to gsap animate out;  Will toggle render inside anim;
               // debugger
-              console.log("BUTTON CLICK")
+              // debugger
 
               if (!isOpen && !dialogIsClosing) {
+                mastheadToggleTextTl.current.play()
                 toggleIsOpen()
                 toggleIsRendered(true)
               }
             }}
           >
             <span className="inline-block !mx-auto duration-100 ease-linear origin-center d:rotate-90 d:block h4 masthead__toggle__text">
-              {" "}
               Menu
             </span>
           </Button>
@@ -104,16 +127,17 @@ export default function Masthead(props) {
               open={isOpen}
               onClose={(e) => {
                 console.log("dialog close!")
+                mastheadToggleTextTl.current.reverse()
                 setDialogIsClosing(true)
                 toggleIsOpen()
               }}
-              id="drawer-outter"
+              id={DOM.drawerOutter.id}
               className="z-[1] top-0 fixed h-full w-full left:0  d:left-[10%] d:pt-0 d:w-[90%] -translate-x-full dmax:overflow-hidden "
               ref={(ref) => (dialogRef.current.node = ref)}
             >
-              <Box id="drawer-inner" className="relative h-full ">
+              <Box id={DOM.drawerInner.id} className="relative h-full ">
                 <Box
-                  id="drawer"
+                  id={DOM.drawer.id}
                   className="grid h-full text-white pt-[20%] d:p-0 grid-cols-20 d:grid-cols-18 bg-grayDarker"
                 >
                   <Box className="self-center col-start-3 row-start-1 pt-12 pb-8 col-span-auto d:col-start-8 col-span-16 d:col-span-10 d:pt-0 d:pb-0">
@@ -121,6 +145,13 @@ export default function Masthead(props) {
                       items={wpMenu}
                       topLevelListItemClassNames="pb-8"
                       subNavClasses="mt-8"
+                      onTransitionLinkClick={() => {
+                        mastheadToggleTextTl.current.reverse().then(() => {
+                          toggleIsRendered(false)
+                          toggleIsOpen()
+                        })
+                      }}
+                      {...navTransLinkProps()}
                     />
                   </Box>
                   <Box

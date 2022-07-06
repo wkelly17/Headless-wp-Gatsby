@@ -17,7 +17,6 @@ function PageDefault(props) {
   let gallery = wpPage.template?.imageGallery?.gallery || null
   let pageSiblings = pageParent.wpChildren?.nodes || null
   let ownChildren = wpPage.wpChildren?.nodes || null
-  let parsingOptions = {}
   function parsedContent(content) {
     return parse(content, replaceOptions)
   }
@@ -33,8 +32,8 @@ function PageDefault(props) {
               <Box className="col-span-full tl:col-end-9">
                 <Box className="pb-8 -translate-y-full d:pb-0">
                   <Button.Link type="link" className="btn-link-left">
-                    <Link to={pageParent.uri}>
-                      <Text.Inline className="font-normal">
+                    <Link to={pageParent.uri} className="">
+                      <Text.Inline className="inline-block ml-2 font-normal text-grayDarker">
                         {pageParent.title}
                       </Text.Inline>
                     </Link>

@@ -1,6 +1,6 @@
 import * as React from "react"
 import { graphql } from "gatsby"
-import { GatsbyImage, StaticImage, getImage } from "gatsby-plugin-image"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { DOM } from "../constants/constants"
 import {
   Box,
@@ -34,11 +34,11 @@ export default function VenuePage(props) {
   const {
     detailsCta,
     detailsGallery1,
-    detailsHeadline,
+    // detailsHeadline,
     detailsImg2,
     detailsImg3,
     detailsItems,
-    detailsTextarea,
+    // detailsTextarea,
     heroImg,
     occasionsHeadline,
     occasionsImg1,

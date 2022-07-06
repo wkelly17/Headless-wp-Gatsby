@@ -1,5 +1,9 @@
 import { gsap } from "gsap"
-import { qf, viewPortWidth, querySafe } from "../utilities/gsap"
+import {
+  viewPortWidth,
+  querySafe,
+  fallbackNodesForDuration,
+} from "../utilities/gsap"
 import { DOM } from "../constants/constants"
 
 //!================================
@@ -447,11 +451,10 @@ export function ExitFromNewsArchiveToSingle(
 
   //=============== SELECTORS  =============
   let mainInner = querySafe("#news-inner", needDur)
-  // todo: put footer back in;
-  let footer = querySafe("#colophon", needDur)
+  let footer = DOM.colophon.get()
 
   //=============== ANIMATIONS  =============
-  tl.to([mainInner], {
+  tl.to([mainInner, footer], {
     duration: 0.5,
     opacity: 0,
     y: "3rem",
@@ -506,11 +509,10 @@ export function ExitToHomeFromMastheadLogo(
   //=============== SELECTORS  =============
   let main = querySafe("main")
   // todo: put footer back in
-  let footer = querySafe("#colophon")
-
+  let footer = DOM.colophon.get()
   //=============== ANIMATIONS  =============
 
-  tl.to([main], {
+  tl.to([main, footer], {
     duration: 0.8,
     ease: "expo.out",
     x: "-100%",
@@ -573,4 +575,149 @@ export function initialPageAnimation() {
   // } else if (path == "/") {
   //   console.log("home initial")
   // }
+}
+
+export function toNavLeave(
+  { node, e, exit, entry, closeNavStateSetter },
+  needDur = false,
+  isDesktop = true
+) {
+  //=============== SETUP  =============
+  if (!node) return
+  let tl = gsap.timeline({
+    paused: true,
+    // onComplete: () => {
+    //   closeNavStateSetter()
+    // },
+  })
+
+  //=============== SELECTORS  =============
+  let drawer = DOM.drawer.get()
+  // let drawerOuter = DOM.drawerOutter.get()
+  // let drawerInner = DOM.drawerInner.get()
+  // let content = document.querySelector("#theContent")
+
+  let container = node
+  let main = document.querySelector("main") || {}
+  let footer = DOM.colophon.get()
+
+  let els = [drawer, container, main]
+  if (needDur) {
+    fallbackNodesForDuration(els)
+  }
+
+  //=============== ANIMATIONS  =============
+
+  tl.to(drawer, {
+    x: "-100%",
+    ease: "expo.out",
+    duration: 0.8,
+  })
+
+    .to([main, footer], {
+      duration: 0.8,
+      ease: "expo.out",
+      x: "-100%",
+    })
+
+    .set(container, {
+      display: "none",
+    })
+
+  // .set(content, {
+  //   clearProps: "transform",
+  // })
+
+  //=============== CONTROLS  =============
+  if (exit && exit.play) {
+    tl.play()
+  }
+  if (needDur) {
+    return tl.duration()
+  }
+}
+
+export function toNavEnter(
+  { node, e, exit, entry },
+  needDur = false,
+  isDesktop = true
+) {
+  if (!node) return
+  let tl = gsap.timeline({
+    paused: true,
+  })
+
+  let main = document.querySelector("main")
+  // let footer = container.querySelector('#colophon');
+
+  tl.from([main], {
+    duration: 0.8,
+    ease: "expo.out",
+    x: "100%",
+  })
+
+  if (entry && entry.play) {
+    tl.play()
+  }
+}
+
+export function genericLeave(
+  { node, e, exit, entry },
+  needDur = false,
+  isDesktop = true
+) {
+  //=============== SETUP  =============
+  if (!node) return
+  let tl = gsap.timeline({
+    paused: true,
+  })
+
+  //=============== SELECTORS  =============
+
+  let main = querySafe("main", needDur)
+  let footer = DOM.colophon.get()
+  let els = [footer, main]
+  if (needDur) {
+    fallbackNodesForDuration(els)
+  }
+
+  //=============== ANIMATIONS  =============
+
+  tl.to([main], {
+    duration: 0.8,
+    ease: "expo.out",
+    x: "-100%",
+  })
+
+  //=============== CONTROLS  =============
+  if (exit && exit.play) {
+    tl.play()
+  }
+  if (needDur) {
+    return tl.duration()
+  }
+}
+
+export function genericEnter(
+  { node, e, exit, entry },
+  needDur = false,
+  isDesktop = true
+) {
+  if (!node) return
+  let tl = gsap.timeline({
+    paused: true,
+  })
+
+  let main = document.querySelector("main")
+  // let footer = container.querySelector('#colophon');
+
+  tl.from([main], {
+    duration: 0.8,
+    ease: "expo.out",
+    x: "100%",
+  })
+
+  if (entry && entry.play) {
+    tl.play()
+  }
 }

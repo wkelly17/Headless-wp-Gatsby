@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import parse, { domToReact } from "html-react-parser"
 import { Box, Heading } from "../components/atoms"
-import { gsap } from "gsap"
+import { Footer } from "../components/organisms"
 
 function PageSpecialTemplate(props) {
   console.log({ props })
@@ -31,19 +31,20 @@ function PageSpecialTemplate(props) {
     return parse(content, options)
   }
 
-  React.useEffect(() => {
-    gsap.to("#fancyAcfEffect", {
-      color: "purple",
-      duration: 2.75,
-      opacity: 0.8,
-      delay: 1,
-    })
-  }, [])
+  // React.useEffect(() => {
+  //   gsap.to("#fancyAcfEffect", {
+  //     color: "purple",
+  //     duration: 2.75,
+  //     opacity: 0.8,
+  //     delay: 1,
+  //   })
+  // }, [])
 
   return (
     <div>
       Title = {title}; Alt col template
       {parsedContent(content)}
+      <Footer />
     </div>
   )
 }

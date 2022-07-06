@@ -15,7 +15,7 @@ import { Head } from "../components/common"
 import { Footer } from "../components/organisms"
 
 import TransitionLink from "gatsby-plugin-transition-link"
-import { GatsbyImage } from "gatsby-plugin-image"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 import { ResponsiveContext } from "../context/ResponsiveContext"
 import { homeScroller } from "../animations/home"
@@ -78,7 +78,7 @@ export default function Homepage(props) {
     <>
       <Head title={title} description={description} />
       <Box.Main
-        className={`h-screen bg-grayLight d:overflow-hidden ${
+        className={`d:h-screen bg-grayLight d:overflow-hidden ${
           isTransitioningFromOtherPage && "opacity-0"
         }`}
         ref={(ref) => (homeRefs.current.hub = ref)}
@@ -90,10 +90,10 @@ export default function Homepage(props) {
         >
           <Box.Section
             id="hub-section-1"
-            className="relative w-full d:grid-cols-10 bg-white  d:ml-[10%] d:w-1/2 flex-grow-0 flex-shrink-0"
+            className="relative w-full grid grid-cols-20 d:grid-cols-10 bg-white  d:ml-[10%] d:w-1/2 flex-grow-0 flex-shrink-0"
           >
             <Box
-              className="w-full h-full shadow-borderRightSm d:shadow-borderRightBg"
+              className="w-full h-full col-span-full shadow-borderRightSm d:shadow-borderRightBg"
               data-js="firstCol"
             >
               <Box className="tagline pt-[20%] relative h4 !font-normal">
@@ -101,8 +101,8 @@ export default function Homepage(props) {
                   {tagline}
                 </small>
               </Box>
-              <Box className="grid py-12 d:grid-cols-10 d:pb-row h-[calc(100%-10vw)] shadow-borderTopSm d:shadow-borderTopBg">
-                <Box className="self-center col-span-full d:col-start-3 d:col-span-6 ">
+              <Box className="grid py-12  grid-cols-20 d:grid-cols-10 d:pb-row h-[calc(100%-10vw)] shadow-borderTopSm d:shadow-borderTopBg">
+                <Box className="self-center col-start-3 col-end-16 d:col-start-3 d:col-span-6 ">
                   <Heading className="pb-4 h3">{headline}</Heading>
                   <p className="pb-2">{textarea}</p>
                   <Button.TransitionLink
@@ -128,7 +128,7 @@ export default function Homepage(props) {
           >
             <Box
               id={DOM.homeHubSection2Col.id}
-              className="flex flex-row-reverse flex-wrap d:block col-span-full bg-tertiary shadow-borderTopSm d:shadow-borderRightBg"
+              className="flex flex-row-reverse flex-wrap dmax:flex-nowrap d:block col-span-full bg-tertiary shadow-borderTopSm d:shadow-borderRightBg"
             >
               <HubPane
                 id={DOM.homeHubSection2Pane.id}
@@ -137,7 +137,7 @@ export default function Homepage(props) {
               >
                 <span
                   id={DOM.homeHubSection2Border.id}
-                  className="absolute block bg-grayDarker right-0 top-0 w-full d:w-[4px] d:h-full"
+                  className="absolute block bg-grayDarker right-0 top-0 w-full d:w-[4px]  d:h-full h-[2px] "
                 ></span>
                 <Box
                   id={DOM.homeHubSection2Lines.id}
@@ -162,7 +162,7 @@ export default function Homepage(props) {
           </Box>
           <Box
             id={DOM.homeHubSection3.id}
-            className="relative grid flex-grow-0 flex-shrink-0 h-full overflow-hidden d:w-2/5 bg-primary grid-cols-20 d:grid-cols-20"
+            className="relative grid flex-grow-0 flex-shrink-0 h-full py-12 overflow-hidden d:w-2/5 bg-primary grid-cols-20 d:grid-cols-20 d:py-0"
           >
             <TransitionLink
               to="/event-calendar"
@@ -171,10 +171,9 @@ export default function Homepage(props) {
             >
               <GatsbyImage
                 alt={myOptionsPage.eventCalendar.posterImage.altText}
-                image={
+                image={getImage(
                   myOptionsPage.eventCalendar.posterImage.localFile
-                    .childImageSharp.gatsbyImageData
-                }
+                )}
                 className="object-cover w-full h-full"
                 imgClassName="bg-top"
               />
@@ -200,19 +199,19 @@ export default function Homepage(props) {
 
           <Box.Section
             id={DOM.homeHubSection4.id}
-            className="flex-grow-0 flex-shrink-0 w-[90%] relative grid bg-white"
+            className="flex-grow-0 flex-shrink-0 d:w-[90%] relative grid bg-white"
           >
-            {/* <span
-            id="hub-section-4-border"
-            className="absolute block bg-grayDarker right-0 top-0 w-full d:w-[4px] d:h-full"
-          ></span> */}
+            <span
+              id="hub-section-4-border"
+              className="absolute block bg-grayDarker right-0 top-0 w-full d:w-[4px] d:h-full h-[2px]"
+            ></span>
             <Box
               className="relative col-span-full d:col-span-18"
               id={DOM.homeHubSection4Col.id}
             >
               <HubPane
                 className={
-                  "grid grid-cols-20 d:grid-cols-18 py-12 d:pt-row d:pb-0"
+                  "grid grid-cols-20 d:grid-cols-18 py-12 d:pt-row d:pb-0 "
                 }
               >
                 <Box className="relative col-start-3 col-span-16 d:col-start-3 d:col-span-14">
@@ -229,7 +228,7 @@ export default function Homepage(props) {
                       return (
                         <ListItem
                           key={post.title}
-                          className={`${
+                          className={`${hideLast3BelowTp(i)} ${
                             !i % 2 === 0 && "tp:mr-[14.28%]"
                           } tp:w-[42.9%] pb-12`}
                         >
@@ -246,7 +245,7 @@ export default function Homepage(props) {
                     to="news"
                     id={DOM.homeHubSection4Btn.id}
                     type="pill"
-                    className="d:left-[45%] !absolute top-0 -translate-x-full translate-y-2"
+                    className="d:left-[45%] d:!absolute d:top-0 d:-translate-x-full d:translate-y-2"
                     {...getTransLinkProps("home2News", transitionDurations)}
                   >
                     All News
@@ -283,7 +282,7 @@ export default function Homepage(props) {
           </Box>
           <Box.Section
             id={DOM.homeHubSection6.id}
-            className="grid flex-grow-0 flex-shrink-0 d:grid-cols-18 dmax:shadow-borderTopSm w-[90%] z-[2]"
+            className="grid flex-grow-0 flex-shrink-0 d:grid-cols-18 dmax:shadow-borderTopSm d:w-[90%] z-[2] border-t-2 border-grayDarker d:border-none"
           >
             <Box className="col-span-full">
               <Footer sideScroller={sideScroller.current} />
@@ -325,6 +324,12 @@ export default function Homepage(props) {
 //     # }
 //   }
 // `
+
+function hideLast3BelowTp(i) {
+  if (i >= 3) {
+    return "hidden"
+  }
+}
 
 export const query = graphql`
   {

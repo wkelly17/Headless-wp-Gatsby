@@ -18,7 +18,7 @@ export function useDomLoadedEffect(domLogicFxn, rerenderDeps) {
     // here DOM is loaded and you can query DOM elements
     // then reset
     setAfterRender(false)
-  }, [afterRender])
+  }, [afterRender, domLogicFxn])
 
   useEffect(() => {
     setAfterRender(true) // (1) will be called after DOM rendered

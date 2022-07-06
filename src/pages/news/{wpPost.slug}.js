@@ -11,14 +11,13 @@ import {
 import { Footer } from "../../components/organisms"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Link } from "gatsby"
-import parse, { domToReact } from "html-react-parser"
+import parse from "html-react-parser"
 
 function BlogSingle(props) {
   const { wpPost, wpPage, allWpPost } = props.data
   let featuredImage = wpPost.featuredImage?.node
   let postsPage = wpPage
   let recentPosts = allWpPost.nodes
-  debugger
 
   return (
     <div className="">

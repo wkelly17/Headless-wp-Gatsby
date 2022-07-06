@@ -29,20 +29,7 @@ exports.createPages = ({ graphql, actions }) => {
     if (result.errors) {
       throw result.errors
     }
-    let cptsSlugs = ["home", "news", "venue", "event-calendar"]
-    // todo: create a separate interior template for proof of concept;
-
-    // Create blog post pages.
-    function resolveTemplate(edge) {
-      console.log(edge.node.template)
-      if (
-        edge.node.template.templateName == "Special Headless Column Template"
-      ) {
-        return specialTemplate
-      } else {
-        return pageTemplate
-      }
-    }
+    let cptsSlugs = ["home", "news", "venue", "event-calendar", "contact"]
 
     result.data.allWpPage.edges.forEach((edge) => {
       if (!cptsSlugs.includes(edge.node.slug)) {
